@@ -1,0 +1,19 @@
+{
+  "slug": "dgs-benefits",
+  "title": "DGS Benefits",
+  "summary": "A polished, content-focused insurance company website built in Next.js, optimized for branding, SEO, and tracking rather than a complex app backend.",
+  "description": "DGS Benefits is a Next.js and TypeScript marketing site for an insurance advisory firm with more than 35 years of experience. The original WordPress site was rebuilt to modernize the brand, improve discoverability, and support a stronger lead-generation strategy. For this second iteration, I served as the sole software engineer, working with the client's marketing consultant to restructure the site around SEO, build a clearer content and routing architecture with unique URLs, and implement metadata, Open Graph tags, Twitter cards, and Google site verification at the app layout level. We coordinated marketing and engineering milestones ahead of open enrollment to keep delivery aligned with business goals. Since launch, Google Analytics has shown a notable increase in traffic and engagement.",
+  "tags": ["Next.js", "TypeScript", "Bootstrap", "SEO", "Google Analytics"],
+  "year": 2026,
+  "repoConfidential": true,
+  "images": [
+    { "src": "/projects/dgs-benefits/1.png", "alt": "DGS Benefits site navbar" },
+    { "src": "/projects/dgs-benefits/2.png", "alt": "DGS Benefits homepage main banner" },
+    { "src": "/projects/dgs-benefits/3.png", "alt": "DGS Benefits featured service cards" },
+    { "src": "/projects/dgs-benefits/4.png", "alt": "DGS Benefits services grid" },
+    { "src": "/projects/dgs-benefits/5.png", "alt": "DGS Benefits site footer" }
+  ],
+  "links": {
+    "demo": "https://www.dgsbenefits.com/"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "slug": "interactive-portfolio-engine",
+  "title": "Interactive Portfolio Engine",
+  "summary": "This site. A feature-driven Next.js sandbox with a code-split WebGL hero.",
+  "description": "The portfolio you are looking at right now. Built to demonstrate enterprise-grade architecture in a small codebase: feature-isolated modules under /features, a React Three Fiber starfield hero that is code-split with next/dynamic and ssr: false so it never blocks the initial paint, and a strict lint/format/commit pipeline (ESLint with no-any, Prettier, Husky + lint-staged).",
+  "tags": ["Next.js", "React Three Fiber", "Framer Motion", "TypeScript"],
+  "year": 2026,
+  "links": {
+    "repo": "https://github.com/"
+  }
+}

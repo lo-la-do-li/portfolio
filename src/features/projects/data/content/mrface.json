@@ -1,0 +1,18 @@
+{
+  "slug": "mrface",
+  "title": "MRFACE",
+  "summary": "A customized Next.js frontend built to grow an artist's online presence and brand recognition.",
+  "description": "A colleague and I planned, designed, and built this website for an up-and-coming artist who wanted to expand his reach beyond his locale and fortify his brand identity. We developed a unique, stylized website that brings his artwork to life through animation and hand-drawn fonts, mixing playful street style with professionalism. I built the artwork gallery — a modal with a carousel structure — keeping the modern, simplified feel of an art catalogue. As a result, the artist has increased both the sales and value of his artwork.",
+  "tags": ["Next.js", "SCSS", "Vercel"],
+  "year": 2025,
+  "repoConfidential": true,
+  "images": [
+    { "src": "/projects/mrface/1.png", "alt": "MRFACE homepage" },
+    { "src": "/projects/mrface/2.png", "alt": "MRFACE artwork gallery" },
+    { "src": "/projects/mrface/3.png", "alt": "MRFACE artwork detail view" },
+    { "src": "/projects/mrface/4.png", "alt": "MRFACE branding and typography detail" }
+  ],
+  "links": {
+    "demo": "https://www.mrface.art/"
+  }
+}
