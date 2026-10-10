@@ -9,7 +9,8 @@ const StarfieldCanvas = dynamic(() => import('./StarfieldCanvas'), {
   loading: () => <div className="absolute inset-0 bg-slate-950" />,
 });
 
-export default function InteractiveHero() {
+// Copy comes in as props so the visuals feature stays decoupled from profile data.
+export default function InteractiveHero({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <section className="relative isolate flex min-h-[70vh] w-full flex-col items-center justify-center overflow-hidden px-4">
       <StarfieldCanvas />
@@ -21,7 +22,7 @@ export default function InteractiveHero() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="bg-gradient-to-b from-white to-slate-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl"
         >
-          Engineering Meets Performance
+          {title}
         </motion.h1>
 
         <motion.p
@@ -30,8 +31,7 @@ export default function InteractiveHero() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mx-auto mt-4 max-w-xl text-lg text-slate-400"
         >
-          An enterprise-ready portfolio sandbox demonstrating smooth browser rendering and
-          architecture boundaries.
+          {subtitle}
         </motion.p>
       </div>
     </section>
