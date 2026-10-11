@@ -2,10 +2,25 @@
   "slug": "dgs-benefits",
   "title": "DGS Benefits",
   "summary": "A polished, content-focused insurance company website built in Next.js, optimized for branding, SEO, and tracking rather than a complex app backend.",
-  "description": "DGS Benefits is a Next.js and TypeScript marketing site for an insurance advisory firm with more than 35 years of experience. The original WordPress site was rebuilt to modernize the brand, improve discoverability, and support a stronger lead-generation strategy. For this second iteration, I served as the sole software engineer, working with the client's marketing consultant to restructure the site around SEO, build a clearer content and routing architecture with unique URLs, and implement metadata, Open Graph tags, Twitter cards, and Google site verification at the app layout level. We coordinated marketing and engineering milestones ahead of open enrollment to keep delivery aligned with business goals. Since launch, Google Analytics has shown a notable increase in traffic and engagement.",
+  "description": "A Next.js and TypeScript rebuild of the marketing site for an insurance advisory firm with 35+ years in business.",
   "tags": ["Next.js", "TypeScript", "Bootstrap", "SEO", "Google Analytics"],
   "year": 2026,
   "repoConfidential": true,
+  "caseStudy": {
+    "role": "Sole software engineer on the second iteration, partnering with the client's marketing consultant.",
+    "problem": "The original WordPress site looked dated, was hard to find in search, and wasn't structured to support the firm's lead-generation strategy.",
+    "approach": [
+      "Rebuilt the site in Next.js and TypeScript to modernize the brand.",
+      "Restructured content and routing around SEO, giving each page a clear, unique URL.",
+      "Implemented metadata, Open Graph and Twitter cards, a generated XML sitemap and robots.txt, and Google site verification, with shared defaults at the root layout so every page inherits them.",
+      "Aligned engineering milestones with the marketing plan so the launch landed ahead of open enrollment."
+    ],
+    "outcome": [
+      "Lighthouse scores of 100 for SEO and Best Practices, 98 for Accessibility, and 95 for Performance on desktop.",
+      "Zero layout shift (CLS 0), so content stays put as the page loads.",
+      "The site's first iteration grew traffic 210% in its first month after launch."
+    ]
+  },
   "images": [
     { "src": "/projects/dgs-benefits/1.png", "alt": "DGS Benefits site navbar" },
     { "src": "/projects/dgs-benefits/2.png", "alt": "DGS Benefits homepage main banner" },
