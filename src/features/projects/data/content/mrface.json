@@ -2,10 +2,23 @@
   "slug": "mrface",
   "title": "MRFACE",
   "summary": "A customized Next.js frontend built to grow an artist's online presence and brand recognition.",
-  "description": "A colleague and I planned, designed, and built this website for an up-and-coming artist who wanted to expand his reach beyond his locale and fortify his brand identity. We developed a unique, stylized website that brings his artwork to life through animation and hand-drawn fonts, mixing playful street style with professionalism. I built the artwork gallery — a modal with a carousel structure — keeping the modern, simplified feel of an art catalogue. As a result, the artist has increased both the sales and value of his artwork.",
+  "description": "A branded website for an up-and-coming artist, built in Next.js to bring his work and identity online.",
   "tags": ["Next.js", "SCSS", "Vercel"],
   "year": 2025,
   "repoConfidential": true,
+  "caseStudy": {
+    "role": "Co-developer with a colleague through launch, then sole developer. Also co-created the MRFACE brand with the artist.",
+    "problem": "The artist had no online presence beyond social media: no brand identity, no portfolio, and no way for buyers outside his area to browse his work or request commissions.",
+    "approach": [
+      "Worked with the artist to define the MRFACE brand, then carried it through the site with hand-drawn section titles, branded buttons, and a welcome video.",
+      "Built the artwork gallery: each piece shows its front view in the grid, and a modal slider reveals alternate views. Artworks load in batches with Load More, driven by JSON data I structured for the gallery and commissions sections.",
+      "Rendered the hand-drawn titles as optimized images through next/image instead of a custom font, so there's no font download, images are served as WebP/AVIF at display size, and their space is reserved to prevent layout shift.",
+      "Kept animations cheap: scroll-in effects run once and only animate opacity and transform, the gallery fade-in stagger is capped at 5 items, and the nav's scroll listener is passive."
+    ],
+    "outcome": [
+      "Since launch, the artist has used the site as the hub for his social media, growing his customer base and opening a FACE studio."
+    ]
+  },
   "images": [
     { "src": "/projects/mrface/1.png", "alt": "MRFACE homepage" },
     { "src": "/projects/mrface/2.png", "alt": "MRFACE artwork gallery" },
