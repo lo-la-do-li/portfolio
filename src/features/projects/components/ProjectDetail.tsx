@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Project } from '../types';
+import CaseStudySections from './CaseStudySections';
 import ProjectGallery from './ProjectGallery';
 
 export default function ProjectDetail({ project }: { project: Project }) {
@@ -27,11 +28,19 @@ export default function ProjectDetail({ project }: { project: Project }) {
         ))}
       </ul>
 
+      {project.caseStudy && (
+        <p className="mt-4 text-sm text-slate-400">
+          <span className="font-semibold text-slate-300">Role:</span> {project.caseStudy.role}
+        </p>
+      )}
+
       {project.images && project.images.length > 0 && <ProjectGallery images={project.images} />}
 
       <p className="mt-8 whitespace-pre-line text-base leading-relaxed text-slate-300">
         {project.description}
       </p>
+
+      {project.caseStudy && <CaseStudySections caseStudy={project.caseStudy} />}
 
       {(project.links?.demo || project.links?.repo || project.repoConfidential) && (
         <div className="mt-8 flex flex-wrap items-center gap-4 text-sm">

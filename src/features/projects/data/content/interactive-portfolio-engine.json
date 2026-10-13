@@ -1,11 +1,26 @@
 {
   "slug": "interactive-portfolio-engine",
   "title": "Interactive Portfolio Engine",
-  "summary": "This site. A feature-driven Next.js sandbox with a code-split WebGL hero.",
-  "description": "The portfolio you are looking at right now. Built to demonstrate enterprise-grade architecture in a small codebase: feature-isolated modules under /features, a React Three Fiber starfield hero that is code-split with next/dynamic and ssr: false so it never blocks the initial paint, and a strict lint/format/commit pipeline (ESLint with no-any, Prettier, Husky + lint-staged).",
-  "tags": ["Next.js", "React Three Fiber", "Framer Motion", "TypeScript"],
+  "summary": "This site. A Next.js 16 portfolio built to production standards, with a code-split WebGL hero.",
+  "description": "The portfolio you're looking at, built the way I'd build on a product team: clear architecture, measurable performance, accessibility, and a CI-gated workflow.",
+  "tags": ["Next.js", "TypeScript", "React Three Fiber", "Tailwind CSS", "GitHub Actions"],
   "year": 2026,
+  "caseStudy": {
+    "role": "Sole developer: architecture, design, and implementation.",
+    "problem": "Most portfolios show what someone has shipped, not how they work. I wanted this one to demonstrate the practices a production frontend team relies on, rather than start from a template.",
+    "approach": [
+      "Organized the code into feature modules (projects, profile, visuals), each owning its types, data, and components. Pages compose features, and features don't import each other.",
+      "Code-split the React Three Fiber starfield with next/dynamic and ssr: false so Three.js never blocks first paint, and kept all content sections as Server Components that ship no client JavaScript.",
+      "Loaded project content from per-project JSON files with Next 16 Cache Components (use cache, cacheLife, cacheTag), statically prerendered with generateStaticParams.",
+      "Diagnosed a WebGL context-loss bug caused by Next 16 preserving hidden routes with React's <Activity>, traced it into React Three Fiber's source, and fixed it with a keyed remount.",
+      "Built accessibility in from the start: semantic landmarks and heading order, a keyboard-navigable lightbox gallery with focus management, and smooth scrolling that respects prefers-reduced-motion.",
+      "Enforced quality on every change: strict TypeScript, ESLint with no any, Prettier, Husky and lint-staged pre-commit hooks, GitHub Actions CI, and Vercel preview deploys for each pull request."
+    ],
+    "outcome": [
+      "Every change passes lint, format, and build checks in CI and gets a live preview before it reaches production."
+    ]
+  },
   "links": {
-    "repo": "https://github.com/"
+    "repo": "https://github.com/lo-la-do-li/portfolio"
   }
 }
