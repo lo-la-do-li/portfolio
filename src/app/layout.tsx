@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Jost } from 'next/font/google';
 import SiteHeader from '@/components/SiteHeader';
 import { profile } from '@/features/profile/data/profile';
 import { siteUrl } from '@/lib/site';
@@ -12,6 +12,12 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
+  subsets: ['latin'],
+});
+
+// Display face for headings (Futura-inspired, same era as the 1926 poster).
+const jost = Jost({
+  variable: '--font-jost',
   subsets: ['latin'],
 });
 
@@ -34,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SiteHeader />
