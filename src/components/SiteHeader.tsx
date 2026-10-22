@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { profile } from '@/features/profile/data/profile';
+import ThemeToggle from '@/features/theme/components/ThemeToggle';
 
 // Hash links are root-relative (`/#about`) so they also work from /projects/*.
 const navItems = [
@@ -17,27 +18,31 @@ export default function SiteHeader() {
           {profile.name}
         </Link>
 
-        <nav aria-label="Main">
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-400">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="hover:text-white">
-                  {item.label}
-                </Link>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <nav aria-label="Main">
+            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-400">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="hover:text-white">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <a
+                  href={profile.links.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  Résumé
+                </a>
               </li>
-            ))}
-            <li>
-              <a
-                href={profile.links.resume}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white"
-              >
-                Résumé
-              </a>
-            </li>
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

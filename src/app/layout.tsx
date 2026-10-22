@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Jost } from 'next/font/google';
 import SiteHeader from '@/components/SiteHeader';
 import { profile } from '@/features/profile/data/profile';
+import { DEFAULT_THEME } from '@/features/theme/constants';
+import { themeScript } from '@/features/theme/themeScript';
 import { siteUrl } from '@/lib/site';
 import './globals.css';
 
@@ -37,11 +39,19 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     // data-scroll-behavior: Next 16 opt-in to keep route changes instant while
     // in-page anchor links scroll smoothly (see globals.css).
+    // data-theme: the server always renders the default; themeScript may switch
+    // it before paint, so suppressHydrationWarning tells React to keep the DOM's
+    // value for <html>'s attributes instead of treating it as a mismatch.
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      data-theme={DEFAULT_THEME}
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <SiteHeader />
         {children}
