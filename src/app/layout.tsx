@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import SiteHeader from '@/components/SiteHeader';
+import { profile } from '@/features/profile/data/profile';
+import { siteUrl } from '@/lib/site';
 import './globals.css';
 
 const geistSans = Geist({
@@ -14,9 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lola Dolinsky's Portfolio",
-  description:
-    "Showcasing Lola Dolinsky's work and projects in a high-performance Next.js application with 3D visuals.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    // Home and any page without its own title.
+    default: 'Lola Dolinsky | Frontend Engineer',
+    // Child pages that set `title` (e.g. 'MRFACE') render as 'MRFACE | Lola Dolinsky'.
+    template: '%s | Lola Dolinsky',
+  },
+  // Same text as the hero headline: one source of truth in profile data.
+  description: profile.headline,
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

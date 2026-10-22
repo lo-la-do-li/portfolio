@@ -3,7 +3,8 @@ import ProjectGrid from '@/features/projects/components/ProjectGrid';
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: 'A showcase of projects.',
+  description:
+    'Frontend case studies by Lola Dolinsky: client sites and personal projects built with React, Next.js, and TypeScript.',
 };
 
 export default function ProjectsPage() {
