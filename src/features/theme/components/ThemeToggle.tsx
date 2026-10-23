@@ -1,24 +1,7 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
-import { DEFAULT_THEME, THEME_STORAGE_KEY, type Theme } from '../constants';
-
-// The theme lives on <html data-theme>, outside React. useSyncExternalStore
-// reads it safely: during hydration React uses getServerSnapshot (matching the
-// server HTML, so no hydration error), then re-renders with the real value.
-function subscribe(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, { attributeFilter: ['data-theme'] });
-  return () => observer.disconnect();
-}
-
-function getSnapshot(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-}
-
-function getServerSnapshot(): Theme {
-  return DEFAULT_THEME;
-}
+import { THEME_STORAGE_KEY, type Theme } from '../constants';
+import { useTheme } from '../useTheme';
 
 function setTheme(theme: Theme) {
   document.documentElement.setAttribute('data-theme', theme);
@@ -37,7 +20,7 @@ const selected = 'bg-fg text-bg';
 const unselected = 'text-muted hover:text-fg';
 
 export default function ThemeToggle() {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const theme = useTheme();
 
   return (
     <div role="group" aria-label="Color theme" className="flex border border-rule">
