@@ -7,7 +7,7 @@ import { profile } from '@/features/profile/data/profile';
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-slate-950 text-white selection:bg-blue-500/30">
+    <main className="relative min-h-screen selection:bg-accent/30">
       {/* High-performance, code-split 3D Hero section */}
       <InteractiveHero title={profile.name} subtitle={profile.headline} />
 
