@@ -4,7 +4,10 @@ import ProjectCard from './ProjectCard';
 export default async function ProjectGrid({
   eagerFirstCover = true,
   cardTitleAs = 'h3',
+  columns = 3,
 }: {
+  /** 3 for a full-width page, 2 inside a narrower column (home page section). */
+  columns?: 2 | 3;
   /** Card heading level: h2 when the grid sits directly under a page h1. */
   cardTitleAs?: 'h2' | 'h3';
   /**
@@ -22,7 +25,7 @@ export default async function ProjectGrid({
     : undefined;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className={`grid gap-4 sm:grid-cols-2 ${columns === 3 ? 'lg:grid-cols-3' : ''}`}>
       {projects.map((project) => (
         <ProjectCard
           key={project.slug}
