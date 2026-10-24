@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random';
 import { Color } from 'three';
 import type { Theme } from '@/features/theme/constants';
 import { useTheme } from '@/features/theme/useTheme';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { useCanvasLifecycle } from '../hooks/useCanvasLifecycle';
 import { particleColors } from '../palette';
 
 const POINT_COUNT = 2000;
@@ -69,30 +69,8 @@ function StarfieldParticles({ theme }: { theme: Theme }) {
 }
 
 export default function StarfieldCanvas() {
-  // With cacheComponents, Next hides (not unmounts) this page on navigation via
-  // <Activity>. R3F's cleanup destroys the WebGL context but keeps its root ref,
-  // so on return it re-renders into a dead context. Bumping the key on hide
-  // makes React mount a fresh <Canvas> when the page is shown again.
-  const [canvasKey, setCanvasKey] = useState(0);
-  useLayoutEffect(() => () => setCanvasKey((key) => key + 1), []);
-
+  const { canvasKey, containerRef, frameloop } = useCanvasLifecycle();
   const theme = useTheme();
-  const reducedMotion = usePrefersReducedMotion();
-
-  // Stop rendering frames while the hero is scrolled out of view.
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(true);
-  useEffect(() => {
-    const element = containerRef.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  // 'demand' renders a still frame and then only when something changes
-  // (e.g. the theme), instead of 60 frames a second.
-  const frameloop = inView && !reducedMotion ? 'always' : 'demand';
 
   return (
     <div ref={containerRef} className="absolute inset-0 -z-10 h-full w-full bg-bg">
