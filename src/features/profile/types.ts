@@ -16,6 +16,8 @@ export interface SkillGroup {
 
 export interface Profile {
   name: string;
+  /** Job title, e.g. 'Frontend Engineer'. Shown above the name and in page titles. */
+  role: string;
   headline: string;
   bio: string;
   email: string;

@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     // Home and any page without its own title.
-    default: 'Lola Dolinsky | Frontend Engineer',
+    default: `${profile.name} | ${profile.role}`,
     // Child pages that set `title` (e.g. 'MRFACE') render as 'MRFACE | Lola Dolinsky'.
     template: '%s | Lola Dolinsky',
   },
-  // Same text as the hero headline: one source of truth in profile data.
-  description: profile.headline,
+  // Same text as the hero: one source of truth in profile data.
+  description: `${profile.role}. ${profile.headline}`,
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
