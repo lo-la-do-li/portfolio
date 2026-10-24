@@ -3,11 +3,20 @@
 import dynamic from 'next/dynamic';
 import { MotionConfig, motion } from 'framer-motion';
 
-// Code-split the heavy ThreeJS bundle so it does not degrade initial Core Web Vitals
+// Code-split the heavy ThreeJS bundle so it does not degrade initial Core Web Vitals.
+// Each visual is its own chunk; only the one rendered below is downloaded.
+const canvasPlaceholder = () => <div className="absolute inset-0 bg-bg" />;
 const StarfieldCanvas = dynamic(() => import('./StarfieldCanvas'), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 bg-bg" />,
+  loading: canvasPlaceholder,
 });
+const RainCanvas = dynamic(() => import('./RainCanvas'), {
+  ssr: false,
+  loading: canvasPlaceholder,
+});
+
+// Which hero visual to show while the rain is in development. Flip to compare.
+const HERO_VISUAL: 'rain' | 'starfield' = 'rain';
 
 // Copy comes in as props so the visuals feature stays decoupled from profile data.
 export default function InteractiveHero({
@@ -28,7 +37,7 @@ export default function InteractiveHero({
         <div className="mx-auto max-w-6xl border-[3px] border-rule p-1.5">
           {/* Text sits bottom-left, leaving the starfield open above and to the right */}
           <div className="relative isolate flex min-h-[70vh] flex-col items-start justify-end overflow-hidden border border-rule px-6 pb-10 sm:px-12 sm:pb-14">
-            <StarfieldCanvas />
+            {HERO_VISUAL === 'rain' ? <RainCanvas /> : <StarfieldCanvas />}
 
             <div className="relative z-10 max-w-2xl text-left">
               {/* Scrim: 80% background at the center, so particles fade behind the text without vanishing */}

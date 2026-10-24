@@ -20,3 +20,12 @@ export const particleColors: Record<Theme, readonly string[]> = {
   dark: Object.values(umbrellas),
   light: Object.values(umbrellas).filter((color) => color !== umbrellas.butter),
 };
+
+/**
+ * Rain: one main color plus a single accent, per theme (the restrained look
+ * from the moodboard: mostly ink/paper, about one drop in ten in the accent).
+ */
+export const rainColors: Record<Theme, { main: string; accent: string }> = {
+  dark: { main: '#fbfaf6', accent: umbrellas.marigold }, // paper + marigold on ink
+  light: { main: '#140b0c', accent: umbrellas.signal }, // ink + signal red on paper
+};
