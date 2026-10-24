@@ -26,8 +26,13 @@
   --color-plum: #823b5b;
 }
 
-/* Layer 2: semantic, dark by default (the site's primary look) */
-:root {
+/*
+ * Layer 2: semantic, dark by default (the site's primary look). Also applies to
+ * any element marked data-theme="dark", so a component can stay dark on a light
+ * page (scoped theming, e.g. the image lightbox).
+ */
+:root,
+[data-theme='dark'] {
   --bg: var(--color-ink);
   --surface: #1d1415;
   --fg: var(--color-paper);
