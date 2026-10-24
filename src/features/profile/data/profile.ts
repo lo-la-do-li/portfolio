@@ -12,6 +12,7 @@ export const profile = {
     github: 'https://github.com/lo-la-do-li',
     linkedin: 'https://www.linkedin.com/in/lola-dolinsky/',
     resume: '/lola-dolinsky-resume.pdf',
+    source: 'https://github.com/lo-la-do-li/portfolio',
   },
   experience: [
     {
