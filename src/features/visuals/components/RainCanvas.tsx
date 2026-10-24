@@ -18,6 +18,32 @@ import { rainFragmentShader, rainVertexShader } from '../shaders/rain';
 const DROP_COUNT = 6000;
 const ACCENT_SHARE = 0.1;
 
+// Camera and scene layout (world units)
+const CAMERA_Z = 5;
+const FOV = 50;
+const MAX_ASPECT = 2.6; // widest hero we cover; wider screens just see the edges
+const FALL_RANGE = [-6, 6]; // y: bottom, top
+
+// The invisible dome: center of its rim, and its radius/height. Fixed for now;
+// later it rests over the name and follows the pointer.
+const DOME = { center: [0, 0.6, 0], radius: 1.0, height: 0.6 };
+// Draw the dome as a wireframe to check splashes line up with it
+const DEBUG_DOME = false;
+
+// Most rain falls in a thin slab through the dome's center so its shelter
+// reads on screen. The footprint is a circle seen from the side: a drop in
+// front of or behind it, but off to the side, misses the dome yet still crosses
+// the dry column on screen. A thin slab means nearly every drop within the
+// dome's width actually hits it. The rest is faint, distant rain for depth.
+const NEAR_SHARE = 0.75;
+const NEAR_DEPTH = 0.35 * DOME.radius; // near rain: z within ± this
+const FAR_DEPTH = [-7, -2];
+
+// Half the visible width at depth z, so each drop's x covers the screen there
+function halfWidthAt(z: number) {
+  return (CAMERA_Z - z) * Math.tan(((FOV / 2) * Math.PI) / 180) * MAX_ASPECT + 0.5;
+}
+
 function buildGeometry() {
   // One 1×1 quad, drawn DROP_COUNT times in a single draw call (instancing).
   const quad = new PlaneGeometry(1, 1);
@@ -31,8 +57,12 @@ function buildGeometry() {
   const seeds = new Float32Array(DROP_COUNT * 4);
   const accents = new Float32Array(DROP_COUNT);
   for (let i = 0; i < DROP_COUNT; i++) {
-    seeds[i * 4] = Math.random(); //       x position
-    seeds[i * 4 + 1] = Math.random(); //   z position (depth)
+    const z =
+      Math.random() < NEAR_SHARE
+        ? (Math.random() * 2 - 1) * NEAR_DEPTH
+        : FAR_DEPTH[0] + Math.random() * (FAR_DEPTH[1] - FAR_DEPTH[0]);
+    seeds[i * 4] = (Math.random() * 2 - 1) * halfWidthAt(z); // world x
+    seeds[i * 4 + 1] = z; //                                  world z (depth)
     seeds[i * 4 + 2] = Math.random(); //   fall phase
     seeds[i * 4 + 3] = 0.85 + Math.random() * 0.3; // speed factor
     accents[i] = Math.random() < ACCENT_SHARE ? 1 : 0;
@@ -50,9 +80,9 @@ function createMaterialParameters() {
     fragmentShader: rainFragmentShader,
     uniforms: {
       uTime: { value: 0 },
-      uBoxX: { value: [-11, 11] },
-      uBoxY: { value: [-5.5, 5.5] },
-      uBoxZ: { value: [-7, 2.5] },
+      uFallRange: { value: FALL_RANGE },
+      uDome: { value: DOME.center },
+      uDomeSize: { value: [DOME.radius, DOME.height] },
       uColor: { value: new Color() },
       uAccent: { value: new Color() },
       uOpacity: { value: 0.5 },
@@ -92,9 +122,21 @@ function RainField({ theme }: { theme: Theme }) {
   // frustumCulled off: three would cull using the 1×1 quad's bounds, but the
   // shader moves every instance far from the origin.
   return (
-    <mesh geometry={geometry} frustumCulled={false}>
-      <shaderMaterial ref={materialRef} args={[materialParameters]} />
-    </mesh>
+    <>
+      <mesh geometry={geometry} frustumCulled={false}>
+        <shaderMaterial ref={materialRef} args={[materialParameters]} />
+      </mesh>
+      {DEBUG_DOME && (
+        // Upper hemisphere scaled into the dome's ellipsoid
+        <mesh
+          position={DOME.center as [number, number, number]}
+          scale={[DOME.radius, DOME.height, DOME.radius]}
+        >
+          <sphereGeometry args={[1, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshBasicMaterial wireframe color={rainColors[theme].accent} />
+        </mesh>
+      )}
+    </>
   );
 }
 
@@ -108,7 +150,7 @@ export default function RainCanvas() {
         key={canvasKey}
         frameloop={frameloop}
         dpr={[1, 2]}
-        camera={{ position: [0, 0, 5], fov: 50 }}
+        camera={{ position: [0, 0, CAMERA_Z], fov: FOV }}
       >
         <RainField theme={theme} />
       </Canvas>
