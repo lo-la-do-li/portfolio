@@ -1,7 +1,7 @@
+import SectionHeading from '@/components/SectionHeading';
 import type { CaseStudy } from '../types';
 
-const headingClass = 'text-xl font-semibold tracking-tight text-white';
-const listClass = 'mt-3 list-disc space-y-2 pl-5 text-slate-300 marker:text-slate-600';
+const listClass = 'mt-6 list-disc space-y-3 pl-5 leading-relaxed text-fg marker:text-muted';
 
 // Role is rendered separately in ProjectDetail's header area, next to the tags.
 export default function CaseStudySections({
@@ -10,18 +10,14 @@ export default function CaseStudySections({
   caseStudy: Pick<CaseStudy, 'problem' | 'approach' | 'outcome'>;
 }) {
   return (
-    <div className="mt-12 space-y-10">
+    <div className="mt-16 space-y-16">
       <section aria-labelledby="problem-heading">
-        <h2 id="problem-heading" className={headingClass}>
-          Problem
-        </h2>
-        <p className="mt-3 leading-relaxed text-slate-300">{caseStudy.problem}</p>
+        <SectionHeading id="problem-heading" title="Problem" />
+        <p className="mt-6 max-w-prose leading-relaxed text-fg">{caseStudy.problem}</p>
       </section>
 
       <section aria-labelledby="approach-heading">
-        <h2 id="approach-heading" className={headingClass}>
-          Approach
-        </h2>
+        <SectionHeading id="approach-heading" title="Approach" />
         <ul className={listClass}>
           {caseStudy.approach.map((item) => (
             <li key={item}>{item}</li>
@@ -30,9 +26,7 @@ export default function CaseStudySections({
       </section>
 
       <section aria-labelledby="outcome-heading">
-        <h2 id="outcome-heading" className={headingClass}>
-          Outcome
-        </h2>
+        <SectionHeading id="outcome-heading" title="Outcome" />
         <ul className={listClass}>
           {caseStudy.outcome.map((item) => (
             <li key={item}>{item}</li>

@@ -3,74 +3,86 @@ import type { Project } from '../types';
 import CaseStudySections from './CaseStudySections';
 import ProjectGallery from './ProjectGallery';
 
+const tagClass =
+  'border border-rule-soft px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted';
+// Same squared, inverting buttons as the Contact section
+const buttonClass =
+  'inline-block border border-rule px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+
 export default function ProjectDetail({ project }: { project: Project }) {
+  const hasLinks = project.links?.demo || project.links?.repo || project.repoConfidential;
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-24">
-      <Link href="/projects" className="text-sm text-slate-400 hover:text-blue-300">
+      <Link
+        href="/projects"
+        className="font-mono text-xs uppercase tracking-[0.14em] text-muted transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      >
         ← All projects
       </Link>
 
-      <div className="mt-6 flex items-baseline justify-between gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      <div className="mt-8 flex items-baseline justify-between gap-4">
+        <h1 className="font-display text-4xl font-medium uppercase tracking-[0.06em] text-balance text-fg sm:text-5xl">
           {project.title}
         </h1>
-        <span className="shrink-0 text-sm text-slate-500">{project.year}</span>
+        <span className="shrink-0 font-mono text-sm text-muted">{project.year}</span>
       </div>
 
-      <ul className="mt-4 flex flex-wrap gap-2">
+      <ul className="mt-5 flex flex-wrap gap-2">
         {project.tags.map((tag) => (
-          <li
-            key={tag}
-            className="rounded-full border border-white/10 px-2.5 py-0.5 text-xs text-slate-300"
-          >
+          <li key={tag} className={tagClass}>
             {tag}
           </li>
         ))}
       </ul>
 
       {project.caseStudy && (
-        <p className="mt-4 text-sm text-slate-400">
-          <span className="font-semibold text-slate-300">Role:</span> {project.caseStudy.role}
+        <p className="mt-6 text-fg">
+          <span className="mr-2 font-mono text-xs uppercase tracking-[0.14em] text-muted">
+            Role
+          </span>
+          {project.caseStudy.role}
         </p>
       )}
 
-      {project.images && project.images.length > 0 && <ProjectGallery images={project.images} />}
-
-      <p className="mt-8 whitespace-pre-line text-base leading-relaxed text-slate-300">
-        {project.description}
-      </p>
-
-      {project.caseStudy && <CaseStudySections caseStudy={project.caseStudy} />}
-
-      {(project.links?.demo || project.links?.repo || project.repoConfidential) && (
-        <div className="mt-8 flex flex-wrap items-center gap-4 text-sm">
+      {/* Links near the top: "can I see it live?" is usually the first question */}
+      {hasLinks && (
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           {project.links?.demo && (
             <a
               href={project.links.demo}
-              className="text-blue-400 hover:text-blue-300"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              className={buttonClass}
             >
-              Live demo →
+              Live site →
             </a>
           )}
           {project.links?.repo && (
             <a
               href={project.links.repo}
-              className="text-blue-400 hover:text-blue-300"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              className={buttonClass}
             >
               Source →
             </a>
           )}
           {project.repoConfidential && (
-            <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
-              Source confidential — client project
+            <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+              Source confidential · client project
             </span>
           )}
         </div>
       )}
+
+      {project.images && project.images.length > 0 && <ProjectGallery images={project.images} />}
+
+      <p className="mt-12 max-w-prose whitespace-pre-line text-lg leading-relaxed text-fg">
+        {project.description}
+      </p>
+
+      {project.caseStudy && <CaseStudySections caseStudy={project.caseStudy} />}
     </article>
   );
 }

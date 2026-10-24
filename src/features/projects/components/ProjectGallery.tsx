@@ -48,16 +48,20 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
               triggerRef.current = e.currentTarget;
               setOpenIndex(index);
             }}
-            className="group relative aspect-video overflow-hidden rounded-lg border border-white/10"
+            aria-label={`Enlarge: ${image.alt}`}
+            // Poster mat: a fine rule with a margin of background around the screenshot
+            className="group block border border-rule-soft p-1.5 transition-colors hover:border-rule focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="(min-width: 640px) 33vw, 50vw"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              className="object-cover transition group-hover:scale-105"
-            />
+            <span className="relative block aspect-video overflow-hidden">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 640px) 33vw, 50vw"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+              />
+            </span>
           </button>
         ))}
       </div>
@@ -67,7 +71,8 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
           role="dialog"
           aria-modal="true"
           aria-label={images[openIndex].alt}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          // Theme background instead of fixed black, so the lightbox matches Night/Day
+          className="fixed inset-0 z-50 flex items-center justify-center bg-bg/95 p-4"
           onClick={close}
         >
           <button
@@ -78,7 +83,7 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
               close();
             }}
             aria-label="Close"
-            className="absolute right-4 top-4 text-2xl text-white/70 hover:text-white"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center border border-rule bg-bg text-xl text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             &times;
           </button>
@@ -92,7 +97,7 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
                   showPrev();
                 }}
                 aria-label="Previous image"
-                className="absolute left-4 text-3xl text-white/70 hover:text-white"
+                className="absolute left-4 flex h-10 w-10 items-center justify-center border border-rule bg-bg text-xl text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 &lsaquo;
               </button>
@@ -103,7 +108,7 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
                   showNext();
                 }}
                 aria-label="Next image"
-                className="absolute right-16 text-3xl text-white/70 hover:text-white"
+                className="absolute right-4 flex h-10 w-10 items-center justify-center border border-rule bg-bg text-xl text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 &rsaquo;
               </button>
