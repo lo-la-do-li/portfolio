@@ -1,22 +1,14 @@
 import Link from 'next/link';
-import SectionHeading from '@/components/SectionHeading';
+import EditorialSection from '@/components/EditorialSection';
 import ProjectGrid from './ProjectGrid';
 
 // Home page section: the project cards themselves, so reviewers see the work
 // without a click, plus a link through to the full projects page.
 export default function SelectedWorkSection() {
   return (
-    <section
-      id="work"
-      aria-labelledby="work-heading"
-      className="mx-auto max-w-5xl scroll-mt-24 px-6 py-24"
-    >
-      <SectionHeading id="work-heading" index="03" title="Selected work" />
-
-      <div className="mt-12">
-        {/* Below the fold here, so no eager image loading */}
-        <ProjectGrid eagerFirstCover={false} />
-      </div>
+    <EditorialSection id="work" index="03" title="Selected work">
+      {/* Below the fold here, so no eager image loading; two columns fit the content column */}
+      <ProjectGrid eagerFirstCover={false} columns={2} />
 
       <Link
         href="/projects"
@@ -24,6 +16,6 @@ export default function SelectedWorkSection() {
       >
         All projects →
       </Link>
-    </section>
+    </EditorialSection>
   );
 }

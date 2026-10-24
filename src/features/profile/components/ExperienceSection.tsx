@@ -1,18 +1,12 @@
-import SectionHeading from '@/components/SectionHeading';
+import EditorialSection from '@/components/EditorialSection';
 import type { ExperienceEntry } from '../types';
 import { formatMonth } from '../lib/formatMonth';
 
 export default function ExperienceSection({ experience }: { experience: ExperienceEntry[] }) {
   return (
-    <section
-      id="experience"
-      aria-labelledby="experience-heading"
-      className="mx-auto max-w-3xl scroll-mt-24 px-6 py-24"
-    >
-      <SectionHeading id="experience-heading" index="02" title="Experience" />
-
+    <EditorialSection id="experience" index="02" title="Experience">
       {/* Ordered list: the sequence (most recent first) is meaningful. */}
-      <ol className="mt-12 space-y-14 border-l border-rule-soft">
+      <ol className="space-y-14 border-l border-rule-soft">
         {experience.map((job) => (
           <li key={`${job.company}-${job.start}`} className="relative pl-8">
             {/* Timeline marker: a small accent diamond on the rule */}
@@ -42,6 +36,6 @@ export default function ExperienceSection({ experience }: { experience: Experien
           </li>
         ))}
       </ol>
-    </section>
+    </EditorialSection>
   );
 }
