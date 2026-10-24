@@ -24,6 +24,8 @@ export interface Project {
   year: number;
   /** Client repo under NDA: show a "source confidential" note instead of a repo link. */
   repoConfidential?: boolean;
+  /** Leads the project grid as a wide feature card. One project at a time. */
+  featured?: boolean;
   caseStudy?: CaseStudy;
   images?: ProjectImage[];
   links?: {

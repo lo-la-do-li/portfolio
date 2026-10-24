@@ -17,7 +17,9 @@ export default async function ProjectGrid({
    */
   eagerFirstCover?: boolean;
 }) {
-  const projects = await getProjects();
+  // The featured project leads; the rest keep their order (newest first)
+  const all = await getProjects();
+  const projects = [...all.filter((p) => p.featured), ...all.filter((p) => !p.featured)];
   // Not every project has a cover image, so "first card" isn't necessarily
   // "first rendered <Image>" — eager-load the first one that actually has one.
   const firstCoverSlug = eagerFirstCover
@@ -26,12 +28,13 @@ export default async function ProjectGrid({
 
   return (
     <div className={`grid gap-4 sm:grid-cols-2 ${columns === 3 ? 'lg:grid-cols-3' : ''}`}>
-      {projects.map((project) => (
+      {projects.map((project, index) => (
         <ProjectCard
           key={project.slug}
           project={project}
           eager={project.slug === firstCoverSlug}
           titleAs={cardTitleAs}
+          variant={index === 0 && project.featured ? 'feature' : 'standard'}
         />
       ))}
     </div>
