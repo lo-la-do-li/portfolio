@@ -3,7 +3,10 @@ import ProjectCard from './ProjectCard';
 
 export default async function ProjectGrid({
   eagerFirstCover = true,
+  cardTitleAs = 'h3',
 }: {
+  /** Card heading level: h2 when the grid sits directly under a page h1. */
+  cardTitleAs?: 'h2' | 'h3';
   /**
    * Eager-load the first cover image (a likely LCP element). Only right when
    * the grid is near the top of the page, as on /projects. Pass false when the
@@ -21,7 +24,12 @@ export default async function ProjectGrid({
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project) => (
-        <ProjectCard key={project.slug} project={project} eager={project.slug === firstCoverSlug} />
+        <ProjectCard
+          key={project.slug}
+          project={project}
+          eager={project.slug === firstCoverSlug}
+          titleAs={cardTitleAs}
+        />
       ))}
     </div>
   );

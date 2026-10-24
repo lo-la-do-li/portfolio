@@ -5,8 +5,11 @@ import type { Project } from '../types';
 export default function ProjectCard({
   project,
   eager = false,
+  titleAs: Title = 'h3',
 }: {
   project: Project;
+  /** Keeps heading levels sequential: h2 under a page h1, h3 under a section h2. */
+  titleAs?: 'h2' | 'h3';
   /** First card in the grid, above the fold — skip lazy-loading its cover image. */
   eager?: boolean;
 }) {
@@ -36,9 +39,9 @@ export default function ProjectCard({
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="font-display text-lg font-medium uppercase tracking-[0.06em] text-fg transition-colors group-hover:text-accent">
+          <Title className="font-display text-lg font-medium uppercase tracking-[0.06em] text-fg transition-colors group-hover:text-accent">
             {project.title}
-          </h3>
+          </Title>
           <span className="shrink-0 font-mono text-xs text-muted">{project.year}</span>
         </div>
 
