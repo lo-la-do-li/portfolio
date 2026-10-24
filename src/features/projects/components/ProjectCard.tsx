@@ -1,3 +1,4 @@
+import { ViewTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Project } from '../types';
@@ -30,21 +31,24 @@ export default function ProjectCard({
         // Poster mat: the screenshot sits inside a fine rule with a margin of
         // background around it, like the white border around a printed poster.
         <div className={`m-3 mb-0 border border-rule-soft p-2 ${feature ? 'md:mb-3 md:mr-0' : ''}`}>
-          <div className="relative aspect-video w-full overflow-hidden">
-            <Image
-              src={cover.src}
-              alt={cover.alt}
-              fill
-              // The feature card's image is ~60% of the row, so it needs a larger source
-              sizes={
-                feature
-                  ? '(min-width: 768px) 60vw, 100vw'
-                  : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
-              }
-              loading={eager ? 'eager' : 'lazy'}
-              className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
-            />
-          </div>
+          {/* Same name as the detail page's cover: the browser morphs one into the other */}
+          <ViewTransition name={`project-cover-${project.slug}`} share="morph" default="none">
+            <div className="relative aspect-video w-full overflow-hidden">
+              <Image
+                src={cover.src}
+                alt={cover.alt}
+                fill
+                // The feature card's image is ~60% of the row, so it needs a larger source
+                sizes={
+                  feature
+                    ? '(min-width: 768px) 60vw, 100vw'
+                    : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+                }
+                loading={eager ? 'eager' : 'lazy'}
+                className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+              />
+            </div>
+          </ViewTransition>
         </div>
       )}
 

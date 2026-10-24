@@ -1,3 +1,5 @@
+import { ViewTransition } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import type { Project } from '../types';
 import CaseStudySections from './CaseStudySections';
@@ -11,6 +13,7 @@ const buttonClass =
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const hasLinks = project.links?.demo || project.links?.repo || project.repoConfidential;
+  const [cover, ...moreImages] = project.images ?? [];
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-24">
@@ -76,7 +79,26 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </div>
       )}
 
-      {project.images && project.images.length > 0 && <ProjectGallery images={project.images} />}
+      {cover && (
+        // Poster-mat cover. Shares its view-transition name with the project
+        // card, so the card's screenshot morphs into this one on navigation.
+        <div className="mt-10 border border-rule-soft p-2">
+          <ViewTransition name={`project-cover-${project.slug}`} share="morph" default="none">
+            <div className="relative aspect-video w-full overflow-hidden">
+              <Image
+                src={cover.src}
+                alt={cover.alt}
+                fill
+                sizes="(min-width: 768px) 768px, 100vw"
+                loading="eager"
+                className="object-cover"
+              />
+            </div>
+          </ViewTransition>
+        </div>
+      )}
+
+      {moreImages.length > 0 && <ProjectGallery images={moreImages} />}
 
       <p className="mt-12 max-w-prose whitespace-pre-line text-lg leading-relaxed text-fg">
         {project.description}

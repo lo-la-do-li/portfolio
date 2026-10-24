@@ -81,6 +81,30 @@ body {
   font-family: var(--font-sans);
 }
 
+/*
+ * View transitions: the project cover morphs from card to detail page.
+ * A slight blur mid-flight hides the stretching while the image resizes.
+ */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+/* Reduced motion: navigate instantly, no morphs or cross-fades */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Smooth in-page scrolling, only for users who haven't asked for reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   html {
