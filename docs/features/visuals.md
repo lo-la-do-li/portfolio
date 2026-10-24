@@ -5,11 +5,22 @@ The WebGL starfield hero on the home page.
 ## Files
 
 - `components/InteractiveHero.tsx` — client component. Renders the hero copy (passed in
-  as `title`/`subtitle` props so this feature doesn't import `profile` data — the page
-  composes the two) and code-splits the canvas with `next/dynamic` + `ssr: false`, so the
-  Three.js bundle never blocks initial load.
+  as `eyebrow`/`title`/`subtitle` props so this feature doesn't import `profile` data — the
+  page composes the two) inside the double-rule poster frame, bottom-left aligned, with a
+  translucent scrim and thin text-shadow outlines so text stays legible over particles.
+  Code-splits the canvas with `next/dynamic` + `ssr: false`, so the Three.js bundle never
+  blocks initial load. `MotionConfig reducedMotion="user"` drops the slide-up for users
+  who prefer reduced motion.
 - `components/StarfieldCanvas.tsx` — the React Three Fiber `<Canvas>` and a rotating
-  point cloud (2000 points from `maath/random.inSphere`).
+  point cloud (2000 points from `maath/random.inSphere`), colored per point from the
+  palette via a vertex-color buffer (built once per theme). Switches `frameloop` from
+  `'always'` to `'demand'` when the hero is scrolled out of view (IntersectionObserver)
+  or the user prefers reduced motion.
+- `palette.ts` — the poster palette as hex values for WebGL, which can't read CSS
+  classes. Must be kept in sync with the palette layer in `src/app/globals.css`; day mode
+  drops butter, which disappears on paper.
+- `hooks/usePrefersReducedMotion.ts` — live `prefers-reduced-motion` via
+  `useSyncExternalStore` (server snapshot `false`, corrected after hydration).
 
 ## Troubleshooting notes
 

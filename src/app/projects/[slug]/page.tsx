@@ -27,7 +27,7 @@ export default async function ProjectPage(props: PageProps<'/projects/[slug]'>) 
   }
 
   return (
-    <main className="relative min-h-screen bg-slate-950 text-white">
+    <main className="relative min-h-screen">
       <ProjectDetail project={project} />
     </main>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import SectionHeading from '@/components/SectionHeading';
 import ProjectGrid from '@/features/projects/components/ProjectGrid';
 
 export const metadata: Metadata = {
@@ -9,13 +10,17 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="relative min-h-screen bg-slate-950 text-white">
-      <section className="mx-auto max-w-5xl px-6 py-24">
-        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Projects</h1>
-        <p className="mt-4 max-w-2xl text-slate-400">A selection of things I&apos;ve built.</p>
+    <main className="relative min-h-screen">
+      <section aria-labelledby="projects-heading" className="mx-auto max-w-5xl px-6 py-24">
+        <SectionHeading id="projects-heading" title="Projects" as="h1" />
+        <p className="mt-6 max-w-prose text-lg leading-relaxed text-fg">
+          Case studies from client and personal work: the problem, the decisions I made, and what
+          changed as a result.
+        </p>
 
         <div className="mt-12">
-          <ProjectGrid />
+          {/* Cards sit directly under the page h1 here, so their titles are h2 */}
+          <ProjectGrid cardTitleAs="h2" />
         </div>
       </section>
     </main>

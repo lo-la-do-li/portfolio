@@ -4,8 +4,8 @@ import type { Profile } from '../types';
 // features/projects, there is no collection to read from disk or cache.
 export const profile = {
   name: 'Lola Dolinsky',
-  headline:
-    'Frontend Engineer building scalable, high-performance web products with React, TypeScript, and Next.js.',
+  role: 'Frontend Engineer',
+  headline: 'Building scalable, high-performance web products with React, TypeScript, and Next.js.',
   bio: 'I’m a frontend engineer with 4+ years of experience building responsive, scalable web applications and shared UI systems. I focus on performance, accessibility, reusable component architecture, and developer-friendly workflows that help teams ship faster. I’ve worked across agency and SaaS environments, delivering product-facing features and internal tools with measurable impact. I’m looking for a long-term product team where I can contribute to thoughtful UX and continue growing across the frontend stack.',
   email: 'dolinsky.lola@gmail.com',
   links: {
