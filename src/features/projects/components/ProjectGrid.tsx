@@ -4,7 +4,10 @@ import ProjectCard from './ProjectCard';
 export default async function ProjectGrid({
   eagerFirstCover = true,
   cardTitleAs = 'h3',
+  columns = 3,
 }: {
+  /** 3 for a full-width page, 2 inside a narrower column (home page section). */
+  columns?: 2 | 3;
   /** Card heading level: h2 when the grid sits directly under a page h1. */
   cardTitleAs?: 'h2' | 'h3';
   /**
@@ -14,7 +17,9 @@ export default async function ProjectGrid({
    */
   eagerFirstCover?: boolean;
 }) {
-  const projects = await getProjects();
+  // The featured project leads; the rest keep their order (newest first)
+  const all = await getProjects();
+  const projects = [...all.filter((p) => p.featured), ...all.filter((p) => !p.featured)];
   // Not every project has a cover image, so "first card" isn't necessarily
   // "first rendered <Image>" — eager-load the first one that actually has one.
   const firstCoverSlug = eagerFirstCover
@@ -22,13 +27,14 @@ export default async function ProjectGrid({
     : undefined;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {projects.map((project) => (
+    <div className={`grid gap-4 sm:grid-cols-2 ${columns === 3 ? 'lg:grid-cols-3' : ''}`}>
+      {projects.map((project, index) => (
         <ProjectCard
           key={project.slug}
           project={project}
           eager={project.slug === firstCoverSlug}
           titleAs={cardTitleAs}
+          variant={index === 0 && project.featured ? 'feature' : 'standard'}
         />
       ))}
     </div>

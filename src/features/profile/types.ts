@@ -26,6 +26,8 @@ export interface Profile {
     linkedin: string;
     /** Path under /public, e.g. '/lola-dolinsky-resume.pdf'. */
     resume: string;
+    /** This site's public repository. */
+    source: string;
   };
   experience: ExperienceEntry[];
   skills: SkillGroup[];

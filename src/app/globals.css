@@ -26,8 +26,13 @@
   --color-plum: #823b5b;
 }
 
-/* Layer 2: semantic, dark by default (the site's primary look) */
-:root {
+/*
+ * Layer 2: semantic, dark by default (the site's primary look). Also applies to
+ * any element marked data-theme="dark", so a component can stay dark on a light
+ * page (scoped theming, e.g. the image lightbox).
+ */
+:root,
+[data-theme='dark'] {
   --bg: var(--color-ink);
   --surface: #1d1415;
   --fg: var(--color-paper);
@@ -79,6 +84,30 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
+}
+
+/*
+ * View transitions: the project cover morphs from card to detail page.
+ * A slight blur mid-flight hides the stretching while the image resizes.
+ */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+/* Reduced motion: navigate instantly, no morphs or cross-fades */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Smooth in-page scrolling, only for users who haven't asked for reduced motion. */

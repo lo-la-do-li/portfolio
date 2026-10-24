@@ -20,6 +20,32 @@
       "Every change passes lint, format, and build checks in CI and gets a live preview before it reaches production."
     ]
   },
+  "images": [
+    {
+      "src": "/projects/interactive-portfolio-engine/hero-night-v1.png",
+      "alt": "Hero in Night mode: role, name and headline inside a double-rule frame over a palette-colored starfield"
+    },
+    {
+      "src": "/projects/interactive-portfolio-engine/hero-day-v1.png",
+      "alt": "Hero in Day mode: the same layout in ink on paper"
+    },
+    {
+      "src": "/projects/interactive-portfolio-engine/sections-night-v1.png",
+      "alt": "Experience section in Night mode: outlined \"02\" numeral beside a timeline with accent diamonds"
+    },
+    {
+      "src": "/projects/interactive-portfolio-engine/sections-day-v1.png",
+      "alt": "Experience section in Day mode"
+    },
+    {
+      "src": "/projects/interactive-portfolio-engine/project-page-night-v1.png",
+      "alt": "Project case study page in Night mode: title, tags, role, live site link and gallery"
+    },
+    {
+      "src": "/projects/interactive-portfolio-engine/project-page-day-v1.png",
+      "alt": "Project case study page in Day mode"
+    }
+  ],
   "links": {
     "repo": "https://github.com/lo-la-do-li/portfolio"
   }

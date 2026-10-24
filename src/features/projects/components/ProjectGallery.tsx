@@ -58,7 +58,7 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
                 alt={image.alt}
                 fill
                 sizes="(min-width: 640px) 33vw, 50vw"
-                loading={index === 0 ? 'eager' : 'lazy'}
+                loading="lazy"
                 className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
               />
             </span>
@@ -68,6 +68,9 @@ export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
 
       {openIndex !== null && (
         <div
+          // Always dark, whatever the page theme: light screenshots need a dark
+          // backdrop to show their edges (scoped theming via the semantic tokens)
+          data-theme="dark"
           role="dialog"
           aria-modal="true"
           aria-label={images[openIndex].alt}

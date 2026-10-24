@@ -1,4 +1,4 @@
-import SectionHeading from '@/components/SectionHeading';
+import EditorialSection from '@/components/EditorialSection';
 import type { Profile } from '../types';
 
 // Squared buttons that invert to solid text color on hover
@@ -13,15 +13,9 @@ export default function ContactSection({
   links: Profile['links'];
 }) {
   return (
-    <section
-      id="contact"
-      aria-labelledby="contact-heading"
-      className="mx-auto max-w-3xl scroll-mt-24 px-6 py-24"
-    >
-      <SectionHeading id="contact-heading" index="04" title="Get in touch" />
-
+    <EditorialSection id="contact" index="04" title="Get in touch">
       {/* Double-rule poster frame: bookends the page with the hero's frame */}
-      <div className="mt-12 border-[3px] border-rule p-1.5">
+      <div className="border-[3px] border-rule p-1.5">
         <div className="border border-rule px-6 py-10 sm:px-12 sm:py-14">
           <p className="max-w-prose text-lg leading-relaxed text-fg">
             Open to frontend roles on product teams. The fastest way to reach me is email.
@@ -68,6 +62,6 @@ export default function ContactSection({
           </ul>
         </div>
       </div>
-    </section>
+    </EditorialSection>
   );
 }

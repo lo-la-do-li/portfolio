@@ -1,16 +1,10 @@
-import SectionHeading from '@/components/SectionHeading';
+import EditorialSection from '@/components/EditorialSection';
 import type { SkillGroup } from '../types';
 
 export default function AboutSection({ bio, skills }: { bio: string; skills: SkillGroup[] }) {
   return (
-    <section
-      id="about"
-      aria-labelledby="about-heading"
-      className="mx-auto max-w-3xl scroll-mt-24 px-6 py-24"
-    >
-      <SectionHeading id="about-heading" index="01" title="About" />
-
-      <p className="mt-8 max-w-prose text-lg leading-relaxed text-fg">{bio}</p>
+    <EditorialSection id="about" index="01" title="About">
+      <p className="max-w-prose text-lg leading-relaxed text-fg">{bio}</p>
 
       <div className="mt-12 grid gap-8 sm:grid-cols-3">
         {skills.map((group) => (
@@ -31,6 +25,6 @@ export default function AboutSection({ bio, skills }: { bio: string; skills: Ski
           </div>
         ))}
       </div>
-    </section>
+    </EditorialSection>
   );
 }

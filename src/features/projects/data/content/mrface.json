@@ -6,6 +6,7 @@
   "tags": ["Next.js", "SCSS", "Vercel"],
   "year": 2025,
   "repoConfidential": true,
+  "featured": true,
   "caseStudy": {
     "role": "Co-developer with a colleague through launch, then sole developer. Also co-created the MRFACE brand with the artist.",
     "problem": "The artist had no online presence beyond social media: no brand identity, no portfolio, and no way for buyers outside his area to browse his work or request commissions.",

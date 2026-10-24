@@ -1,17 +1,7 @@
 import Link from 'next/link';
 import { profile } from '@/features/profile/data/profile';
 import ThemeToggle from '@/features/theme/components/ThemeToggle';
-
-// Hash links are root-relative (`/#about`) so they also work from /projects/*.
-const navItems = [
-  { href: '/#about', label: 'About' },
-  { href: '/#experience', label: 'Experience' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/#contact', label: 'Contact' },
-];
-
-const navLink =
-  'text-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent';
+import HeaderNav from './HeaderNav';
 
 // Two rules run through the box behind the name, after the 1920s Underground
 // nameplate. The name's own background masks the rules where the text sits.
@@ -34,27 +24,7 @@ export default function SiteHeader() {
         </Link>
 
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <nav aria-label="Main">
-            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-[0.12em]">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className={navLink}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <a
-                  href={profile.links.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={navLink}
-                >
-                  Résumé
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <HeaderNav resumeHref={profile.links.resume} />
 
           <ThemeToggle />
         </div>
