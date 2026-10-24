@@ -15,36 +15,40 @@ export default function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group block overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] transition hover:border-blue-500/40 hover:bg-white/[0.06]"
+      className="group flex flex-col border border-rule-soft bg-bg transition-colors hover:border-rule focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
       {cover && (
-        <div className="relative aspect-video w-full overflow-hidden border-b border-white/10">
-          <Image
-            src={cover.src}
-            alt={cover.alt}
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            loading={eager ? 'eager' : 'lazy'}
-            className="object-cover transition group-hover:scale-105"
-          />
+        // Poster mat: the screenshot sits inside a fine rule with a margin of
+        // background around it, like the white border around a printed poster.
+        <div className="m-3 mb-0 border border-rule-soft p-2">
+          <div className="relative aspect-video w-full overflow-hidden">
+            <Image
+              src={cover.src}
+              alt={cover.alt}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              loading={eager ? 'eager' : 'lazy'}
+              className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+            />
+          </div>
         </div>
       )}
 
-      <div className="p-6">
+      <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="text-lg font-semibold text-white group-hover:text-blue-300">
+          <h3 className="font-display text-lg font-medium uppercase tracking-[0.06em] text-fg transition-colors group-hover:text-accent">
             {project.title}
           </h3>
-          <span className="shrink-0 text-sm text-slate-500">{project.year}</span>
+          <span className="shrink-0 font-mono text-xs text-muted">{project.year}</span>
         </div>
 
-        <p className="mt-2 text-sm text-slate-400">{project.summary}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{project.summary}</p>
 
-        <ul className="mt-4 flex flex-wrap gap-2">
+        <ul className="mt-auto flex flex-wrap gap-2 pt-4">
           {project.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-full border border-white/10 px-2.5 py-0.5 text-xs text-slate-300"
+              className="border border-rule-soft px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted"
             >
               {tag}
             </li>
