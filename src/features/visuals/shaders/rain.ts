@@ -1,5 +1,6 @@
 // GLSL for the hero rain. Every drop is one instance of a tiny quad; its whole
-// state — falling, hitting the invisible dome, splashing — is computed on the
+// state — falling, hitting the invisible dome, splashing, running off the
+// curve and dripping from the rim — is computed on the
 // GPU from time and its per-drop seed. Nothing is stored between frames: the
 // CPU only updates `uTime` (and later the dome's position).
 
@@ -15,43 +16,106 @@ export const rainVertexShader = /* glsl */ `
   varying vec2 vUv;
   varying float vFade;       // depth fade: far drops are fainter
   varying float vAccent;
-  varying float vSplash;     // 1.0 while this drop is drawn as a splash
-  varying float vSplashAge;  // 0 → 1 over the splash's life
+  varying float vMode;       // 0 streak, 1 splash ring
+  varying float vAge;        // splash: 0 → 1 over its life
+  varying float vStrength;   // extra opacity factor (runoff fades in)
 
-  const float SPEED = 9.0;          // world units per second
-  const float LENGTH = 0.35;        // streak length
+  const float SPEED = 9.0;          // rain speed, world units per second
+  const float LENGTH = 0.35;        // rain streak length
   const float WIDTH = 0.012;        // streak width
   const float SPLASH_TIME = 0.22;   // seconds
   const float SPLASH_SIZE = 0.09;   // final ring diameter
+  const float RUNOFF_SHARE = 0.2;   // share of impacts that run off
+  const float SLIDE_V0 = 0.3;       // runoff's starting speed down the surface
+  const float SLIDE_ACCEL = 4.0;    // and its acceleration
+  const float GRAVITY = 20.0;       // once it leaves the rim
+  const float RUNOFF_LENGTH = 0.07; // rivulet streak length on the surface
+  const float DRIP_LENGTH = 0.16;   // drips read as drops, not strands
+
+  const float STREAK = 0.0;
+  const float SPLASH = 1.0;
+
+  // Point on the dome's surface at distance d from its axis, in direction dir
+  vec3 surfacePoint(vec2 dir, float d) {
+    float k = min(d / uDomeSize.x, 1.0);
+    return vec3(
+      uDome.x + dir.x * d,
+      uDome.y + uDomeSize.y * sqrt(1.0 - k * k),
+      uDome.z + dir.y * d
+    );
+  }
+
+  // Downhill direction along the surface at distance d (the derivative of the
+  // surface height). Steepens toward the rim, where it points straight down.
+  vec3 downhill(vec2 dir, float d) {
+    float k = min(d / uDomeSize.x, 0.999);
+    float slope = uDomeSize.y * k / (uDomeSize.x * sqrt(1.0 - k * k));
+    return normalize(vec3(dir.x, -slope, dir.y));
+  }
 
   void main() {
     float speed = SPEED * aSeed.w;
 
     // Falling forever: height wraps around the fall range (mod works like a
     // clock face), offset by each drop's phase so they don't move in lockstep.
+    // The range extends well below the screen so a drop's runoff and drip can
+    // finish before its next fall begins.
     float span = uFallRange.y - uFallRange.x;
     float fallen = mod(aSeed.z * span + uTime * speed, span);
     vec3 center = vec3(aSeed.x, uFallRange.y - fallen, aSeed.y);
 
+    float mode = STREAK;
+    float age = 0.0;
+    float strength = 1.0;
+    float streakLength = LENGTH;
+    vec3 streakAxis = vec3(0.0, 1.0, 0.0);   // falling rain: vertical
+    bool water = false;                       // running off the dome
+    bool hidden = false;
+
     // --- The invisible dome: top half of an ellipsoid ---
-    // How far is this drop's column from the dome's vertical axis?
-    float d = length(center.xz - uDome.xz);
-    float splash = 0.0;
-    float splashAge = 0.0;
-    bool absorbed = false;
+    vec2 offset = center.xz - uDome.xz;
+    float d = length(offset);
     if (d < uDomeSize.x) {
-      // Surface height above this column: tallest at the center, zero at the rim
       float k = d / uDomeSize.x;
       float surface = uDome.y + uDomeSize.y * sqrt(1.0 - k * k);
-      // Positive once the drop has passed the surface
-      float sinceImpact = (surface - center.y) / speed;
+      float sinceImpact = (surface - center.y) / speed;   // < 0: still falling
+
       if (sinceImpact > 0.0) {
         if (sinceImpact < SPLASH_TIME) {
-          splash = 1.0;
-          splashAge = sinceImpact / SPLASH_TIME;
-          center.y = surface;           // the splash sits on the surface
+          // 1. Splash: a ring growing on the surface
+          mode = SPLASH;
+          age = sinceImpact / SPLASH_TIME;
+          center.y = surface;
+        } else if (fract(sin(aSeed.z * 1651.3 + aSeed.w * 89.7) * 43758.5453) < RUNOFF_SHARE) {
+          water = true;
+          float t = sinceImpact - SPLASH_TIME;
+          // Direction away from the dome's axis (any direction if dead center)
+          vec2 dir = d > 0.001 ? offset / d : vec2(1.0, 0.0);
+          // Time to reach the rim: solve d + v0·t + ½a·t² = radius
+          float slideTime = (-SLIDE_V0 + sqrt(SLIDE_V0 * SLIDE_V0
+            + 2.0 * SLIDE_ACCEL * (uDomeSize.x - d))) / SLIDE_ACCEL;
+
+          if (t < slideTime) {
+            // 2. Rivulet: runs down the curve, speeding up, as a short streak
+            // lined up with its motion (reads as flowing water, not a dot)
+            float dd = d + SLIDE_V0 * t + 0.5 * SLIDE_ACCEL * t * t;
+            center = surfacePoint(dir, dd);
+            streakAxis = downhill(dir, dd);
+            streakLength = RUNOFF_LENGTH;
+            strength = 0.8 * smoothstep(0.0, 0.12, t);   // fades in after the splash
+          } else {
+            // 3. Drip: leaves the rim at the speed it reached, then falls under
+            // gravity, drifting slightly outward. One continuous motion.
+            float td = t - slideTime;
+            float rimSpeed = SLIDE_V0 + SLIDE_ACCEL * slideTime;
+            center = surfacePoint(dir, uDomeSize.x)
+              + vec3(dir.x, 0.0, dir.y) * 0.3 * td
+              - vec3(0.0, rimSpeed * td + 0.5 * GRAVITY * td * td, 0.0);
+            streakLength = clamp((rimSpeed + GRAVITY * td) * 0.02, 0.04, DRIP_LENGTH);
+            strength = 0.8;
+          }
         } else {
-          absorbed = true;              // dry space beneath the dome
+          hidden = true;   // absorbed: the dry space beneath the dome
         }
       }
     }
@@ -61,26 +125,30 @@ export const rainVertexShader = /* glsl */ `
     vec3 cameraUp = vec3(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1]);
 
     vec3 world;
-    if (splash > 0.5) {
-      // Square sprite that grows over the splash's life
-      float size = mix(0.02, SPLASH_SIZE, splashAge);
+    if (mode == SPLASH) {
+      float size = mix(0.02, SPLASH_SIZE, age);
       world = center + (cameraRight * position.x + cameraUp * position.y) * size;
     } else {
-      // Thin vertical streak that always faces the camera
-      world = center + vec3(0.0, position.y * LENGTH, 0.0) + cameraRight * position.x * WIDTH;
+      // Streak along streakAxis; its width faces the camera (cross product of
+      // the streak direction and the direction to the camera)
+      vec3 toCamera = normalize(cameraPosition - center);
+      vec3 across = normalize(cross(streakAxis, toCamera));
+      world = center + streakAxis * position.y * streakLength + across * position.x * WIDTH;
     }
 
     vec4 viewPosition = modelViewMatrix * vec4(world, 1.0);
-    // Absorbed drops are moved outside the clip volume, so nothing is drawn
-    gl_Position = absorbed ? vec4(2.0, 2.0, 2.0, 1.0) : projectionMatrix * viewPosition;
+    // Hidden drops are moved outside the clip volume, so nothing is drawn
+    gl_Position = hidden ? vec4(2.0, 2.0, 2.0, 1.0) : projectionMatrix * viewPosition;
 
     vUv = position.xy + 0.5;
     // Near slab (~5 units away) at full strength; distant rain much fainter, so
     // it reads as background rather than filling the dry space
     vFade = smoothstep(13.0, 4.5, -viewPosition.z);
-    vAccent = aAccent;
-    vSplash = splash;
-    vSplashAge = splashAge;
+    // Accent color only on falling rain; water on the dome stays the main color
+    vAccent = water ? 0.0 : aAccent;
+    vMode = mode;
+    vAge = age;
+    vStrength = strength;
   }
 `;
 
@@ -92,21 +160,22 @@ export const rainFragmentShader = /* glsl */ `
   varying vec2 vUv;
   varying float vFade;
   varying float vAccent;
-  varying float vSplash;
-  varying float vSplashAge;
+  varying float vMode;       // 0 streak, 1 splash ring
+  varying float vAge;
+  varying float vStrength;
 
   void main() {
     float alpha;
-    if (vSplash > 0.5) {
-      // A thin ring that fades as it grows
+    if (vMode > 0.5) {
+      // Splash: a thin ring that fades as it grows
       float r = length(vUv - 0.5) * 2.0;
       float ring = smoothstep(0.6, 0.8, r) * (1.0 - smoothstep(0.85, 1.0, r));
-      alpha = uOpacity * 1.6 * ring * (1.0 - vSplashAge);
+      alpha = uOpacity * 1.6 * ring * (1.0 - vAge);
     } else {
       // Bright head, fading tail — reads as motion
       alpha = uOpacity * smoothstep(0.0, 1.0, vUv.y);
     }
-    gl_FragColor = vec4(mix(uColor, uAccent, vAccent), alpha * vFade);
+    gl_FragColor = vec4(mix(uColor, uAccent, vAccent), alpha * vFade * vStrength);
     // Convert from three.js's linear working space to the screen's color space
     #include <colorspace_fragment>
   }

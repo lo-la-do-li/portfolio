@@ -15,14 +15,17 @@ import { useCanvasLifecycle } from '../hooks/useCanvasLifecycle';
 import { rainColors } from '../palette';
 import { rainFragmentShader, rainVertexShader } from '../shaders/rain';
 
-const DROP_COUNT = 6000;
+// Doubled with the fall range below, so on-screen density is unchanged
+const DROP_COUNT = 12000;
 const ACCENT_SHARE = 0.1;
 
 // Camera and scene layout (world units)
 const CAMERA_Z = 5;
 const FOV = 50;
 const MAX_ASPECT = 2.6; // widest hero we cover; wider screens just see the edges
-const FALL_RANGE = [-6, 6]; // y: bottom, top
+// y: bottom, top. Extends far below the screen so each drop's runoff and drip
+// can finish before it wraps back to the top.
+const FALL_RANGE = [-18, 6];
 
 // The invisible dome: center of its rim, and its radius/height. Fixed for now;
 // later it rests over the name and follows the pointer.
