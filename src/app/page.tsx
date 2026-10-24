@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen selection:bg-accent/30">
       {/* High-performance, code-split 3D Hero section */}
-      <InteractiveHero title={profile.name} subtitle={profile.headline} />
+      <InteractiveHero eyebrow={profile.role} title={profile.name} subtitle={profile.headline} />
 
       <AboutSection bio={profile.bio} skills={profile.skills} />
 
