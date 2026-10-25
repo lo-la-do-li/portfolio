@@ -6,11 +6,12 @@
 
 export const rainVertexShader = /* glsl */ `
   uniform float uTime;
-  uniform vec2 uFallRange;   // y: bottom, top (world units)
+  uniform float uFallSpan;   // length of each drop's loop (mostly off screen)
+  uniform vec3 uRain;        // half width, top, bottom (world units, whole hero)
   uniform vec3 uDome;        // center of the dome's rim (world units)
   uniform vec2 uDomeSize;    // radius, height
 
-  attribute vec4 aSeed;      // world x, world z, fall phase (0–1), speed factor
+  attribute vec4 aSeed;      // x (see below), world z, fall phase (0–1), speed factor
   attribute float aAccent;   // 1.0 for accent-colored drops
 
   varying vec2 vUv;
@@ -20,8 +21,8 @@ export const rainVertexShader = /* glsl */ `
   varying float vAge;        // splash: 0 → 1 over its life
   varying float vStrength;   // extra opacity factor (runoff fades in)
 
-  const float SPEED = 9.0;          // rain speed, world units per second
-  const float LENGTH = 0.35;        // rain streak length
+  const float SPEED = 3.0;          // gentle: drifts rather than streaks
+  const float LENGTH = 0.2;         // rain streak length
   const float WIDTH = 0.012;        // streak width
   const float SPLASH_TIME = 0.22;   // seconds
   const float SPLASH_SIZE = 0.09;   // final ring diameter
@@ -56,13 +57,19 @@ export const rainVertexShader = /* glsl */ `
   void main() {
     float speed = SPEED * aSeed.w;
 
-    // Falling forever: height wraps around the fall range (mod works like a
-    // clock face), offset by each drop's phase so they don't move in lockstep.
-    // The range extends well below the screen so a drop's runoff and drip can
-    // finish before its next fall begins.
-    float span = uFallRange.y - uFallRange.x;
-    float fallen = mod(aSeed.z * span + uTime * speed, span);
-    vec3 center = vec3(aSeed.x, uFallRange.y - fallen, aSeed.y);
+    // Gentle rain across the hero. Most drops have a fixed x (aSeed.x in −1–1,
+    // scaled to the hero's width). Drops marked to fall over the umbrella store
+    // x + 10 instead, as an offset from the dome, so its outline always has
+    // rain landing on it wherever it moves.
+    float x = aSeed.x > 5.0
+      ? uDome.x + (aSeed.x - 10.0) * uDomeSize.x
+      : aSeed.x * uRain.x;
+    // Falling forever: height wraps around the loop (mod works like a clock
+    // face), offset by each drop's phase so they don't move in lockstep. The
+    // loop extends well below the hero so runoff and drips can finish.
+    float top = uRain.y;
+    float fallen = mod(aSeed.z * uFallSpan + uTime * speed, uFallSpan);
+    vec3 center = vec3(x, top - fallen, aSeed.y);
 
     float mode = STREAK;
     float age = 0.0;
@@ -141,9 +148,10 @@ export const rainVertexShader = /* glsl */ `
     gl_Position = hidden ? vec4(2.0, 2.0, 2.0, 1.0) : projectionMatrix * viewPosition;
 
     vUv = position.xy + 0.5;
-    // Near slab (~5 units away) at full strength; distant rain much fainter, so
-    // it reads as background rather than filling the dry space
-    vFade = smoothstep(13.0, 4.5, -viewPosition.z);
+    // Soft top and bottom edges, so drops never pop in or out
+    float fadeIn = 1.0 - smoothstep(top - 0.6, top, center.y);
+    float fadeOut = smoothstep(uRain.z - 0.6, uRain.z, center.y);
+    vFade = fadeIn * fadeOut;
     // Accent color only on falling rain; water on the dome stays the main color
     vAccent = water ? 0.0 : aAccent;
     vMode = mode;
@@ -156,6 +164,7 @@ export const rainFragmentShader = /* glsl */ `
   uniform vec3 uColor;
   uniform vec3 uAccent;
   uniform float uOpacity;
+  uniform float uVisibility; // 0–1: fades the whole shower in and out (Play/Pause)
 
   varying vec2 vUv;
   varying float vFade;
@@ -175,7 +184,7 @@ export const rainFragmentShader = /* glsl */ `
       // Bright head, fading tail — reads as motion
       alpha = uOpacity * smoothstep(0.0, 1.0, vUv.y);
     }
-    gl_FragColor = vec4(mix(uColor, uAccent, vAccent), alpha * vFade * vStrength);
+    gl_FragColor = vec4(mix(uColor, uAccent, vAccent), alpha * vFade * vStrength * uVisibility);
     // Convert from three.js's linear working space to the screen's color space
     #include <colorspace_fragment>
   }

@@ -32,5 +32,5 @@ export function useCanvasLifecycle() {
 
   const frameloop: 'always' | 'demand' = inView && !reducedMotion ? 'always' : 'demand';
 
-  return { canvasKey, containerRef, frameloop };
+  return { canvasKey, containerRef, frameloop, reducedMotion, inView };
 }

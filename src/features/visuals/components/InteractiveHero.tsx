@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { MotionConfig, motion } from 'framer-motion';
 
@@ -28,6 +29,11 @@ export default function InteractiveHero({
   title: string;
   subtitle: string;
 }) {
+  // The rain needs to know where the name is (the umbrella rests above it)
+  // and where to listen for the pointer (the whole framed hero)
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+
   return (
     // reducedMotion="user": with the OS setting on, Framer skips the slide-up
     // (transform) and keeps only the fade.
@@ -36,8 +42,15 @@ export default function InteractiveHero({
         {/* Double-rule poster frame: thick outer rule, gap, thin inner rule */}
         <div className="mx-auto max-w-6xl border-[3px] border-rule p-1.5">
           {/* Text sits bottom-left, leaving the starfield open above and to the right */}
-          <div className="relative isolate flex min-h-[70vh] flex-col items-start justify-end overflow-hidden border border-rule px-6 pb-10 sm:px-12 sm:pb-14">
-            {HERO_VISUAL === 'rain' ? <RainCanvas /> : <StarfieldCanvas />}
+          <div
+            ref={frameRef}
+            className="relative isolate flex min-h-[70vh] flex-col items-start justify-end overflow-hidden border border-rule px-6 pb-10 sm:px-12 sm:pb-14"
+          >
+            {HERO_VISUAL === 'rain' ? (
+              <RainCanvas anchorRef={titleRef} interactionRef={frameRef} />
+            ) : (
+              <StarfieldCanvas />
+            )}
 
             <div className="relative z-10 max-w-2xl text-left">
               {/* Scrim: 80% background at the center, so particles fade behind the text without vanishing */}
@@ -56,6 +69,7 @@ export default function InteractiveHero({
               </motion.p>
 
               <motion.h1
+                ref={titleRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.8, ease: 'easeOut' }}
