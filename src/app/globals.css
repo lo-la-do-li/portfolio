@@ -110,6 +110,11 @@ body {
   }
 }
 
+/* While a modal dialog is open, the page behind it doesn't scroll (iOS included) */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 /* Smooth in-page scrolling, only for users who haven't asked for reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   html {
