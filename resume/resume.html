@@ -191,7 +191,7 @@
         </p>
         <p>
           <strong>Testing &amp; Delivery:</strong> Vitest, React Testing Library, Vue Testing
-          Library, Cypress; unit, integration, and E2E testing; CI/CD
+          Library, Playwright, Cypress; unit, integration, E2E; CI/CD
         </p>
         <p>
           <strong>UI Systems:</strong> Design systems, Storybook, component architecture,
@@ -286,17 +286,20 @@
         <div class="entry">
           <div class="entry-header">
             <div class="role">Portfolio — loladolinsky.com</div>
-            <div class="meta">Next.js 16, TypeScript, React Three Fiber</div>
+            <div class="meta">Next.js 16, TypeScript, Playwright, React Three Fiber</div>
           </div>
           <ul>
             <li>
-              Built with feature-based architecture, strict TypeScript, and CI on every pull
-              request, using an agentic AI workflow: reviewed steps, each change verified in the
-              browser.
+              Vitest and React Testing Library unit tests; Playwright end-to-end and axe
+              accessibility tests on Chrome and iPhone WebKit, in CI.
             </li>
             <li>
-              Fixed a mobile-only lightbox bug: reproduced it in device emulation, then rebuilt it
-              on a native &lt;dialog&gt; with swipe, keyboard, and focus support.
+              Fixed a mobile-only lightbox bug with a native &lt;dialog&gt; rebuild, guarded by a
+              Playwright regression test.
+            </li>
+            <li>
+              Built with an agentic AI workflow: reviewed steps, each change verified in the browser
+              and by tests.
             </li>
           </ul>
         </div>
