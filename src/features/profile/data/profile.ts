@@ -6,7 +6,7 @@ export const profile = {
   name: 'Lola Dolinsky',
   role: 'Frontend Engineer',
   headline: 'Building scalable, high-performance web products with React, TypeScript, and Next.js.',
-  bio: 'I’m a frontend engineer with 4+ years of experience building responsive, scalable web applications and shared UI systems. I focus on performance, accessibility, reusable component architecture, and developer-friendly workflows that help teams ship faster. I’ve worked across agency and SaaS environments, delivering product-facing features and internal tools with measurable impact. I’m looking for a long-term product team where I can contribute to thoughtful UX and continue growing across the frontend stack.',
+  bio: 'I’m a frontend engineer with 5+ years of experience building scalable web applications and shared UI systems with TypeScript, React, Next.js, and Vue. I bring a strong background in performance optimization, accessibility, observability, and reusable component architecture, and I’ve shipped customer-facing features end-to-end in cross-functional, remote teams. I’m looking for a product team where I can own meaningful work and keep growing across the frontend stack.',
   email: 'dolinsky.lola@gmail.com',
   links: {
     github: 'https://github.com/lo-la-do-li',
