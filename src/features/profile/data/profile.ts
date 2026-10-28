@@ -34,7 +34,7 @@ export const profile = {
       end: '2024-01',
       highlights: [
         'Shipped responsive, scalable features for the Payments Portal used by internal teams and external customers.',
-        'Built reusable Tailwind-based design system components that improved UI consistency across 3 applications and increased development efficiency.',
+        'Maintained the company-wide, cross-platform style library in Storybook, building reusable Tailwind-based components that improved UI consistency across 3 applications and increased development efficiency.',
         'Maintained 80%+ test coverage, integrated Product Experience Software, and helped build a hackathon-winning Real User Monitoring dashboard.',
       ],
     },
@@ -63,6 +63,7 @@ export const profile = {
         'HTML',
         'CSS',
         'Tailwind CSS',
+        'Storybook',
       ],
     },
     {
