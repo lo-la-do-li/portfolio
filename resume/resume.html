@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lola Dolinsky - Resume</title>
+    <style>
+      :root {
+        --text: #1f2937;
+        --muted: #4b5563;
+        --line: #d1d5db;
+        --accent: #111827;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f3f4f6;
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.35;
+      }
+
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        margin: 0 auto;
+        background: #fff;
+        padding: 0.55in 0.65in;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.1;
+        letter-spacing: 0.2px;
+        color: var(--accent);
+        & span {
+          font-size: 22px;
+          font-weight: 400;
+          color: var(--muted);
+        }
+      }
+
+      .contact {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .contact a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .contact a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        margin-top: 14px;
+      }
+
+      .section-title {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 6px;
+        margin-bottom: 10px;
+        color: var(--accent);
+      }
+
+      .summary {
+        font-size: 14px;
+      }
+
+      .skills p {
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .entry {
+        margin-bottom: 14px;
+      }
+
+      .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 4px;
+        flex-wrap: wrap;
+      }
+
+      .role {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .meta {
+        font-size: 13px;
+        color: var(--muted);
+        text-align: right;
+      }
+
+      ul {
+        margin: 6px 0 0 18px;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      .education-item {
+        margin-bottom: 4px;
+      }
+
+      .education-item .degree {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .education-item .school {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+
+        .page {
+          width: auto;
+          min-height: auto;
+          margin: 0;
+          padding: 0.3in 0.5in;
+          box-shadow: none;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>LOLA DOLINSKY<span> | Frontend Engineer</span></h1>
+        <div class="contact">
+          Denver, Colorado • 918-693-2230 •
+          <a href="mailto:dolinsky.lola@gmail.com">dolinsky.lola@gmail.com</a> •
+          <a href="https://www.linkedin.com/in/lola-dolinsky/">LinkedIn</a> •
+          <a href="https://github.com/lo-la-do-li">GitHub</a> •
+          <a href="https://loladolinsky.com">loladolinsky.com</a>
+        </div>
+      </header>
+
+      <section>
+        <div class="section-title">Professional Summary</div>
+        <p class="summary">
+          Frontend engineer with 5+ years of experience building customer-facing web applications
+          and shared UI systems with TypeScript, React, Next.js, and Vue. Owns features end to end,
+          from design to release, with a focus on accessibility, performance, and observability.
+          Fully remote since 2021, using AI-assisted, test-verified workflows.
+        </p>
+      </section>
+
+      <section class="skills">
+        <div class="section-title">Skills</div>
+        <p>
+          <strong>Languages &amp; Frameworks:</strong> TypeScript, JavaScript, React, Next.js,
+          Vue.js, Node.js, REST APIs, HTML, CSS, Tailwind CSS
+        </p>
+        <p>
+          <strong>Testing &amp; Delivery:</strong> Vitest, React Testing Library, Vue Testing
+          Library, Cypress; unit, integration, and E2E testing; CI/CD
+        </p>
+        <p>
+          <strong>UI Systems:</strong> Design systems, Storybook, component architecture,
+          accessibility (WCAG), responsive design
+        </p>
+        <p>
+          <strong>Performance &amp; Observability:</strong> Datadog RUM, FullStory, Core Web Vitals,
+          session replay, API latency monitoring
+        </p>
+        <p>
+          <strong>AI-Assisted Development:</strong> Agentic workflows for task breakdown,
+          implementation, and verification
+        </p>
+      </section>
+
+      <section>
+        <div class="section-title">Experience</div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div class="role">Light Studios LLC — Frontend Engineer (Contract)</div>
+            <div class="meta">Remote | April 2024 – present</div>
+          </div>
+          <ul>
+            <li>
+              Own client web projects end to end, from requirements through launch, using React,
+              Next.js, and TypeScript.
+            </li>
+            <li>
+              Build reusable, accessible UI features with an emphasis on maintainability,
+              performance, and SEO.
+            </li>
+            <li>
+              As sole engineer, rebuilt an insurance firm's WordPress site in Next.js and
+              TypeScript, reaching <strong>Lighthouse 95+ in every category</strong> with zero
+              layout shift and <strong>50%+ monthly active user growth</strong> since relaunch.
+            </li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div class="role">LeafLink — Frontend Software Engineer</div>
+            <div class="meta">Remote (New York, NY) | October 2021 – January 2024</div>
+          </div>
+          <ul>
+            <li>
+              Shipped customer-facing Payments Portal features with Vue.js, TypeScript, and REST
+              APIs.
+            </li>
+            <li>
+              Maintained the company-wide, cross-platform Storybook style library, unifying UI
+              across <strong>3 applications</strong> with reusable Tailwind components.
+            </li>
+            <li>
+              Maintained <strong>80%+ test coverage</strong> with unit, integration, and end-to-end
+              tests (Vitest, Vue Testing Library, Cypress).
+            </li>
+            <li>
+              Helped build a hackathon-winning Datadog Real User Monitoring dashboard tracking Core
+              Web Vitals, user friction, API latency, and session replays; instrumented custom user
+              actions and identified and fixed the bugs they surfaced.
+            </li>
+            <li>
+              Integrated FullStory to give product teams insight into user behavior and friction
+              points.
+            </li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div class="role">Rocket Software — Software Engineer Intern</div>
+            <div class="meta">Denver, CO | June 2021 – August 2021</div>
+          </div>
+          <ul>
+            <li>
+              Developed accessible frontend components and data visualizations for a performance
+              monitoring dashboard.
+            </li>
+            <li>
+              Helped resolve a frontend build bottleneck, contributing to a
+              <strong>28% improvement</strong> in build time.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Projects</div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div class="role">Portfolio — loladolinsky.com</div>
+            <div class="meta">Next.js 16, TypeScript, React Three Fiber</div>
+          </div>
+          <ul>
+            <li>
+              Built with feature-based architecture, strict TypeScript, and CI on every pull
+              request, using an agentic AI workflow: reviewed steps, each change verified in the
+              browser.
+            </li>
+            <li>
+              Fixed a mobile-only lightbox bug: reproduced it in device emulation, then rebuilt it
+              on a native &lt;dialog&gt; with swipe, keyboard, and focus support.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Education</div>
+
+        <div class="education-item">
+          <span class="degree">Diploma in Frontend Engineering</span>
+          <span class="school"> | Turing School of Software &amp; Design — Denver, CO</span>
+        </div>
+
+        <div class="education-item">
+          <span class="degree">M.A. in Speech-Language Pathology</span>
+          <span class="school"> | University of Tulsa — Tulsa, OK</span>
+        </div>
+
+        <div class="education-item">
+          <span class="degree">B.A. in Linguistics</span>
+          <span class="school"> | University of Colorado Boulder — Boulder, CO</span>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
