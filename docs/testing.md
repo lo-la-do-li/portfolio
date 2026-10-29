@@ -18,6 +18,8 @@ playwright.config.ts          Playwright config
 e2e/                          Playwright: whole-app tests
   gallery.spec.ts
   theme.spec.ts
+  not-found.spec.ts
+  redirects.spec.ts
   a11y.spec.ts
 src/features/…/*.test.ts(x)   Vitest: next to the code each one covers
 ```
@@ -81,11 +83,13 @@ Worker environment:
    in WebKit, Safari's engine, where the gallery bug lived).
 3. Each test drives a real page:
 
-| Spec              | Checks                                                                                                                         |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `gallery.spec.ts` | Arrows are tappable (the regression), swipe track, page scroll lock, Close / backdrop / Escape, focus returns to the thumbnail |
-| `theme.spec.ts`   | Night by default; Day survives a reload **with the app's JS blocked**, proving the pre-paint script (not React) applies it     |
-| `a11y.spec.ts`    | axe WCAG 2.2 A/AA scan of `/`, `/projects` and a project page, in both themes                                                  |
+| Spec                | Checks                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `gallery.spec.ts`   | Arrows are tappable (the regression), swipe track, page scroll lock, Close / backdrop / Escape, focus returns to the thumbnail |
+| `theme.spec.ts`     | Night by default; Day survives a reload **with the app's JS blocked**, proving the pre-paint script (not React) applies it     |
+| `not-found.spec.ts` | Unknown URLs and unknown project slugs return a real 404 status, the 404 page and a link home                                  |
+| `redirects.spec.ts` | Each short URL's status (307 or 308) and `Location`; `/resume` ends at a PDF                                                   |
+| `a11y.spec.ts`      | axe WCAG 2.2 A/AA scan of `/`, `/projects`, a project page and the 404 page, in both themes                                    |
 
 Notes:
 
@@ -97,6 +101,8 @@ Notes:
 - The a11y scan emulates reduced motion so contrast is checked on the settled page, not
   mid-fade.
 - Keyboard navigation is skipped on the mobile project.
+- The redirect tests use Playwright's `request` fixture with `maxRedirects: 0`: no
+  browser, just HTTP, so they can check the redirect itself rather than where it ends up.
 
 ## CI
 
