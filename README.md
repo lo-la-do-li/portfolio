@@ -26,6 +26,7 @@ src/
   app/              routes, layout, sitemap, robots
   components/       shared layout pieces (header, footer, section headings)
   features/
+    og/             share cards for links (Open Graph images)
     profile/        about, experience, contact
     projects/       project data, cards, case studies, gallery
     theme/          Night/Day theme without a flash on load
@@ -59,6 +60,7 @@ The first `test:e2e` run needs browsers: `npx playwright install chromium webkit
 ## Docs
 
 - [Testing](docs/testing.md) — where the tests live, which runner suits which test, CI
+- [OG](docs/features/og.md) — share cards generated at build time, and Satori's quirks
 - [Projects](docs/features/projects.md) — file-based project data with Cache Components
 - [Theme](docs/features/theme.md) — design tokens and a Night/Day theme with no flash
 - [Visuals](docs/features/visuals.md) — the code-split WebGL hero and its lifecycle

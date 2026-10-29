@@ -20,6 +20,7 @@ e2e/                          Playwright: whole-app tests
   theme.spec.ts
   not-found.spec.ts
   redirects.spec.ts
+  og.spec.ts
   a11y.spec.ts
 src/**/*.test.ts(x)           Vitest: next to the code each one covers
 ```
@@ -91,6 +92,7 @@ Worker environment:
 | `theme.spec.ts`     | Night by default; Day survives a reload **with the app's JS blocked**, proving the pre-paint script (not React) applies it     |
 | `not-found.spec.ts` | Unknown URLs and unknown project slugs return a real 404 status, the 404 page and a link home                                  |
 | `redirects.spec.ts` | Each short URL's status (307 or 308) and `Location`; `/resume` ends at a PDF                                                   |
+| `og.spec.ts`        | Share card tags on `/`, `/projects` and every project; each image is a 1200×630 PNG                                            |
 | `a11y.spec.ts`      | axe WCAG 2.2 A/AA scan of `/`, `/projects`, a project page and the 404 page, in both themes                                    |
 
 Notes:
@@ -128,3 +130,5 @@ guards against, confirm the test fails for the right reason, then restore:
 - Dropping the theme script's `light` / `dark` whitelist fails the tampered-value test.
 - Layering the gallery track over the Next arrow on mobile fails the arrows test.
 - Disconnecting the error page's Try again button from `retry` fails its retry test.
+- Removing the project card route fails the project share card tests (they fall back
+  to the site card).
