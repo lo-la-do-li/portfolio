@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { THEME_STORAGE_KEY, type Theme } from '../src/features/theme/constants';
 
-const PATHS = ['/', '/projects', '/projects/mrface'];
+const PATHS = ['/', '/projects', '/projects/mrface', '/no-such-page'];
 const THEMES: Theme[] = ['dark', 'light'];
 
 for (const path of PATHS) {

@@ -18,16 +18,19 @@ playwright.config.ts          Playwright config
 e2e/                          Playwright: whole-app tests
   gallery.spec.ts
   theme.spec.ts
+  not-found.spec.ts
+  redirects.spec.ts
   a11y.spec.ts
-src/features/…/*.test.ts(x)   Vitest: next to the code each one covers
+src/**/*.test.ts(x)           Vitest: next to the code each one covers
 ```
 
 Vitest only picks up `src/**/*.test.{ts,tsx}` (`include`); Playwright only looks in `e2e/`
 (`testDir`). Different suffixes and folders keep either runner from picking up the
 other's files.
 
-Unit tests sit beside their code to match the feature-folder architecture: moving or
-deleting `features/theme` takes its tests with it, and it's obvious what has coverage.
+Unit tests sit beside their code to match the feature-folder architecture (route files
+like `app/error.tsx` included): moving or deleting `features/theme` takes its tests with
+it, and it's obvious what has coverage.
 End-to-end tests cover several features at once, so they get their own folder.
 
 ## Which runner for which test
@@ -62,6 +65,7 @@ and a unit test can force edge cases (a US timezone) that are awkward in a brows
 | `formatMonth.test.ts`  | The UTC pin: runs in `America/Denver`, where `'2024-04'` would print `Mar 2024` |
 | `themeScript.test.ts`  | Saved theme applied; tampered value ignored; storage that throws                |
 | `ThemeToggle.test.tsx` | Default Night; clicking Day updates `<html>`, `aria-pressed`, storage           |
+| `error.test.tsx`       | Error page heading, the digest shown only when present, Try again calls `retry` |
 
 Worker environment:
 
@@ -81,11 +85,13 @@ Worker environment:
    in WebKit, Safari's engine, where the gallery bug lived).
 3. Each test drives a real page:
 
-| Spec              | Checks                                                                                                                         |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `gallery.spec.ts` | Arrows are tappable (the regression), swipe track, page scroll lock, Close / backdrop / Escape, focus returns to the thumbnail |
-| `theme.spec.ts`   | Night by default; Day survives a reload **with the app's JS blocked**, proving the pre-paint script (not React) applies it     |
-| `a11y.spec.ts`    | axe WCAG 2.2 A/AA scan of `/`, `/projects` and a project page, in both themes                                                  |
+| Spec                | Checks                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `gallery.spec.ts`   | Arrows are tappable (the regression), swipe track, page scroll lock, Close / backdrop / Escape, focus returns to the thumbnail |
+| `theme.spec.ts`     | Night by default; Day survives a reload **with the app's JS blocked**, proving the pre-paint script (not React) applies it     |
+| `not-found.spec.ts` | Unknown URLs and unknown project slugs return a real 404 status, the 404 page and a link home                                  |
+| `redirects.spec.ts` | Each short URL's status (307 or 308) and `Location`; `/resume` ends at a PDF                                                   |
+| `a11y.spec.ts`      | axe WCAG 2.2 A/AA scan of `/`, `/projects`, a project page and the 404 page, in both themes                                    |
 
 Notes:
 
@@ -97,6 +103,8 @@ Notes:
 - The a11y scan emulates reduced motion so contrast is checked on the settled page, not
   mid-fade.
 - Keyboard navigation is skipped on the mobile project.
+- The redirect tests use Playwright's `request` fixture with `maxRedirects: 0`: no
+  browser, just HTTP, so they can check the redirect itself rather than where it ends up.
 
 ## CI
 
@@ -119,3 +127,4 @@ guards against, confirm the test fails for the right reason, then restore:
 - Removing `timeZone: 'UTC'` from `formatMonth` fails both of its tests.
 - Dropping the theme script's `light` / `dark` whitelist fails the tampered-value test.
 - Layering the gallery track over the Next arrow on mobile fails the arrows test.
+- Disconnecting the error page's Try again button from `retry` fails its retry test.
