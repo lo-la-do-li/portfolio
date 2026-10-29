@@ -1,15 +1,13 @@
 import { ViewTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { buttonClass } from '@/components/buttonClass';
 import type { Project } from '../types';
 import CaseStudySections from './CaseStudySections';
 import ProjectGallery from './ProjectGallery';
 
 const tagClass =
   'border border-rule-soft px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted';
-// Same squared, inverting buttons as the Contact section
-const buttonClass =
-  'inline-block border border-rule px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const hasLinks = project.links?.demo || project.links?.repo || project.repoConfidential;

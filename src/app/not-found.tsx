@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buttonClass } from '@/components/buttonClass';
 import SectionHeading from '@/components/SectionHeading';
 import { profile } from '@/features/profile/data/profile';
 
 export const metadata: Metadata = {
   title: 'Page not found',
 };
-
-// Same squared buttons as the contact section
-const linkClass =
-  'inline-block border border-rule px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 // Root not-found renders inside the root layout (header, footer, theme) for
 // any unmatched URL and for notFound() calls, e.g. an unknown project slug.
@@ -25,12 +22,12 @@ export default function NotFound() {
 
         <ul className="mt-10 flex flex-wrap gap-3">
           <li>
-            <Link href="/" className={linkClass}>
+            <Link href="/" className={buttonClass}>
               Home
             </Link>
           </li>
           <li>
-            <Link href="/projects" className={linkClass}>
+            <Link href="/projects" className={buttonClass}>
               Projects
             </Link>
           </li>
@@ -39,7 +36,7 @@ export default function NotFound() {
               href={profile.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className={linkClass}
+              className={buttonClass}
             >
               Résumé (PDF)
             </a>

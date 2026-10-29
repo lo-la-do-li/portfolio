@@ -1,9 +1,6 @@
+import { buttonClass } from '@/components/buttonClass';
 import EditorialSection from '@/components/EditorialSection';
 import type { Profile } from '../types';
-
-// Squared buttons that invert to solid text color on hover
-const linkClass =
-  'inline-block border border-rule px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 export default function ContactSection({
   email,
@@ -34,7 +31,7 @@ export default function ContactSection({
                 href={links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
+                className={buttonClass}
               >
                 GitHub
               </a>
@@ -44,7 +41,7 @@ export default function ContactSection({
                 href={links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
+                className={buttonClass}
               >
                 LinkedIn
               </a>
@@ -54,7 +51,7 @@ export default function ContactSection({
                 href={links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
+                className={buttonClass}
               >
                 Résumé (PDF)
               </a>

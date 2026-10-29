@@ -3,10 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import SectionHeading from '@/components/SectionHeading';
-
-// Same squared buttons as the contact section and the 404 page
-const linkClass =
-  'inline-block cursor-pointer border border-rule px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-fg transition-colors hover:bg-fg hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+import { buttonClass } from '@/components/buttonClass';
 
 // Root error boundary: wraps every page inside the root layout, so the header,
 // footer and theme survive a crash. Errors in the root layout itself would
@@ -41,12 +38,12 @@ export default function ErrorPage({
 
         <ul className="mt-10 flex flex-wrap gap-3">
           <li>
-            <button type="button" onClick={() => retry()} className={linkClass}>
+            <button type="button" onClick={() => retry()} className={buttonClass}>
               Try again
             </button>
           </li>
           <li>
-            <Link href="/" className={linkClass}>
+            <Link href="/" className={buttonClass}>
               Home
             </Link>
           </li>
