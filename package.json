@@ -12,7 +12,8 @@
     "resume:pdf": "node scripts/resume-pdf.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "icons": "node scripts/icons.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
