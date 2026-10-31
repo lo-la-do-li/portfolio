@@ -21,6 +21,7 @@ e2e/                          Playwright: whole-app tests
   not-found.spec.ts
   redirects.spec.ts
   og.spec.ts
+  icons.spec.ts
   a11y.spec.ts
 src/**/*.test.ts(x)           Vitest: next to the code each one covers
 ```
@@ -93,6 +94,7 @@ Worker environment:
 | `not-found.spec.ts` | Unknown URLs and unknown project slugs return a real 404 status, the 404 page and a link home                                  |
 | `redirects.spec.ts` | Each short URL's status (307 or 308) and `Location`; `/resume` ends at a PDF                                                   |
 | `og.spec.ts`        | Share card tags on `/`, `/projects` and every project; each image is a 1200×630 PNG                                            |
+| `icons.spec.ts`     | `favicon.ico`, `icon.svg` and `apple-icon.png` are each linked in `<head>` and served with the right type                      |
 | `a11y.spec.ts`      | axe WCAG 2.2 A/AA scan of `/`, `/projects`, a project page and the 404 page, in both themes                                    |
 
 Notes:
