@@ -1,5 +1,6 @@
 import { buttonClass } from '@/components/buttonClass';
 import EditorialSection from '@/components/EditorialSection';
+import ContactForm from '@/features/contact/components/ContactForm';
 import type { Profile } from '../types';
 
 export default function ContactSection({
@@ -15,12 +16,16 @@ export default function ContactSection({
       <div className="border-[3px] border-rule p-1.5">
         <div className="border border-rule px-6 py-10 sm:px-12 sm:py-14">
           <p className="max-w-prose text-lg leading-relaxed text-fg">
-            Open to frontend roles on product teams. The fastest way to reach me is email.
+            Open to frontend roles on product teams.
           </p>
+
+          <div className="mt-8">
+            <ContactForm />
+          </div>
 
           <a
             href={`mailto:${email}`}
-            className="mt-6 inline-block break-all font-display text-2xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-3xl"
+            className="mt-10 inline-block break-all font-display text-xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-2xl"
           >
             {email}
           </a>

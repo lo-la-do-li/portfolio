@@ -60,6 +60,7 @@ The first `test:e2e` run needs browsers: `npx playwright install chromium webkit
 ## Docs
 
 - [Testing](docs/testing.md) — where the tests live, which runner suits which test, CI
+- [Contact](docs/features/contact.md) — the Resend-backed contact form and its env setup
 - [OG](docs/features/og.md) — share cards generated at build time, and Satori's quirks
 - [Projects](docs/features/projects.md) — file-based project data with Cache Components
 - [Theme](docs/features/theme.md) — design tokens and a Night/Day theme with no flash
