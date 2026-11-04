@@ -29,5 +29,16 @@ account email, which is fine for testing.
 
 ## Spam
 
-A hidden honeypot field catches simple bots. If spam gets through, add rate limiting or
-Cloudflare Turnstile.
+Two layers:
+
+- A hidden honeypot field catches simple bots.
+- [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) is rendered by
+  `TurnstileWidget` and its token is verified server-side in `lib/turnstile.ts` before
+  anything is sent. Tokens are single-use, so the widget resets after every submission. The
+  action fails closed: missing keys or a failed check means no email.
+
+Create a widget in the Cloudflare dashboard (Turnstile → Add widget, with
+`loladolinsky.com` as a hostname) and set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and
+`TURNSTILE_SECRET_KEY`. For local development use Cloudflare's
+[test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), listed in
+`.env.example`.

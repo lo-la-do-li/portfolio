@@ -1,6 +1,7 @@
 'use server';
 
 import { Resend } from 'resend';
+import { verifyTurnstile } from './lib/turnstile';
 import { validateContact, type ContactErrors, type ContactFields } from './lib/validate';
 
 export type ContactState =
@@ -26,10 +27,19 @@ export async function sendContact(_prev: ContactState, data: FormData): Promise<
   const errors = validateContact(values);
   if (Object.keys(errors).length > 0) return { status: 'error', errors, values };
 
-  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env;
-  if (!RESEND_API_KEY || !CONTACT_TO_EMAIL || !CONTACT_FROM_EMAIL) {
-    console.error('Contact form is missing Resend environment variables.');
+  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL, TURNSTILE_SECRET_KEY } =
+    process.env;
+  if (!RESEND_API_KEY || !CONTACT_TO_EMAIL || !CONTACT_FROM_EMAIL || !TURNSTILE_SECRET_KEY) {
+    console.error('Contact form is missing environment variables.');
     return { status: 'error', message: 'Something went wrong. Please email me directly.', values };
+  }
+
+  if (!(await verifyTurnstile(text(data, 'cf-turnstile-response'), TURNSTILE_SECRET_KEY))) {
+    return {
+      status: 'error',
+      message: 'Spam check failed. Please wait a moment and try again.',
+      values,
+    };
   }
 
   try {

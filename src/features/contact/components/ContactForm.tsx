@@ -4,6 +4,7 @@ import { useActionState } from 'react';
 import { buttonClass } from '@/components/buttonClass';
 import { sendContact, type ContactState } from '../actions';
 import { LIMITS } from '../lib/validate';
+import TurnstileWidget from './TurnstileWidget';
 
 const initial: ContactState = { status: 'idle' };
 
@@ -104,6 +105,8 @@ export default function ContactForm({
         <label htmlFor="contact-website">Website</label>
         <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
+
+      <TurnstileWidget resetKey={state} />
 
       <div role="alert" className="min-h-6 text-sm text-accent">
         {state.status === 'error' ? state.message : null}
