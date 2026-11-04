@@ -16,7 +16,7 @@ export default function ContactSection({
       <div className="border-[3px] border-rule p-1.5">
         <div className="border border-rule px-6 py-10 sm:px-12 sm:py-14">
           <p className="max-w-prose text-lg leading-relaxed text-fg">
-            Open to frontend roles on product teams. The fastest way to reach me is email.
+            Open to frontend roles on product teams.
           </p>
 
           <div className="mt-8">

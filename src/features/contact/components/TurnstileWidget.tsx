@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTheme } from '@/features/theme/useTheme';
 
 type TurnstileApi = {
   render: (el: HTMLElement, options: Record<string, unknown>) => string;
@@ -34,10 +35,11 @@ function loadScript(): Promise<void> {
 
 // Renders the challenge, which adds a hidden `cf-turnstile-response` input to the
 // surrounding form. Tokens are single-use, so `resetKey` changes after each submission
-// to get a fresh one.
+// to get a fresh one. The widget can't change theme in place, so a theme switch re-renders it.
 export default function TurnstileWidget({ resetKey }: { resetKey: unknown }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
+  const theme = useTheme();
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return;
@@ -47,7 +49,11 @@ export default function TurnstileWidget({ resetKey }: { resetKey: unknown }) {
     loadScript()
       .then(() => {
         if (cancelled || !window.turnstile) return;
-        widgetId.current = window.turnstile.render(container, { sitekey: siteKey });
+        widgetId.current = window.turnstile.render(container, {
+          sitekey: siteKey,
+          theme,
+          size: 'flexible',
+        });
       })
       .catch(() => {});
 
@@ -56,7 +62,7 @@ export default function TurnstileWidget({ resetKey }: { resetKey: unknown }) {
       if (widgetId.current && window.turnstile) window.turnstile.remove(widgetId.current);
       widgetId.current = null;
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     if (widgetId.current && window.turnstile) window.turnstile.reset(widgetId.current);
