@@ -23,10 +23,9 @@ export default function ContactSection({
             <ContactForm />
           </div>
 
-          <p className="mt-10 text-fg">Prefer email? Write to me directly:</p>
           <a
             href={`mailto:${email}`}
-            className="mt-2 inline-block break-all font-display text-xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-2xl"
+            className="mt-10 inline-block break-all font-display text-xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-2xl"
           >
             {email}
           </a>
