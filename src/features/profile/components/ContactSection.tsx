@@ -1,5 +1,6 @@
 import { buttonClass } from '@/components/buttonClass';
 import EditorialSection from '@/components/EditorialSection';
+import ContactForm from '@/features/contact/components/ContactForm';
 import type { Profile } from '../types';
 
 export default function ContactSection({
@@ -18,9 +19,14 @@ export default function ContactSection({
             Open to frontend roles on product teams. The fastest way to reach me is email.
           </p>
 
+          <div className="mt-8">
+            <ContactForm />
+          </div>
+
+          <p className="mt-10 text-fg">Prefer email? Write to me directly:</p>
           <a
             href={`mailto:${email}`}
-            className="mt-6 inline-block break-all font-display text-2xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-3xl"
+            className="mt-2 inline-block break-all font-display text-xl font-medium text-fg underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-2xl"
           >
             {email}
           </a>
