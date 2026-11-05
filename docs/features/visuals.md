@@ -13,9 +13,19 @@ The WebGL starfield hero on the home page.
   who prefer reduced motion.
 - `components/StarfieldCanvas.tsx` — the React Three Fiber `<Canvas>` and a rotating
   point cloud (2000 points from `maath/random.inSphere`), colored per point from the
-  palette via a vertex-color buffer (built once per theme). Switches `frameloop` from
+  palette via a vertex-color buffer (built once per theme), drawn with a custom shader. Switches `frameloop` from
   `'always'` to `'demand'` when the hero is scrolled out of view (IntersectionObserver)
   or the user prefers reduced motion.
+- `lensShader.ts` — the point shaders behind the cursor lens. Near the pointer the vertex
+  shader magnifies screen space (a fisheye, up to 1.8× at the center) and enlarges the
+  stars, and the fragment shader blends them toward `lensHighlight`, so they read as
+  closer. All on the GPU; the CPU only updates a few uniforms per frame. Lens size and
+  strength are `LENS_RADIUS` / `LENS_MAGNIFY` in `StarfieldCanvas.tsx`. The shader
+  replicates three's `PointsMaterial` size attenuation, so stars look as they did before.
+- `hooks/useHeroPointer.ts` — the canvas sits behind the hero text and can't receive
+  pointer events, so this listens on the window and maps the mouse to the hero's
+  rectangle into a shared ref (no React state, so no re-renders per mouse move). Touch is
+  ignored, and the lens is off entirely under `prefers-reduced-motion`.
 - `palette.ts` — the poster palette as hex values for WebGL, which can't read CSS
   classes. Must be kept in sync with the palette layer in `src/app/globals.css`; day mode
   drops butter, which disappears on paper.

@@ -15,6 +15,12 @@ const umbrellas = {
   butter: '#fee191',
 } as const;
 
+/** Color stars shift toward under the cursor: paper on dark, ink on light. */
+export const lensHighlight: Record<Theme, string> = {
+  dark: '#fbfaf6',
+  light: '#140b0c',
+};
+
 /** Particle colors per theme. Butter disappears on paper, so day mode drops it. */
 export const particleColors: Record<Theme, readonly string[]> = {
   dark: Object.values(umbrellas),

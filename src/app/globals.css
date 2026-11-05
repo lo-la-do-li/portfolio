@@ -86,6 +86,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Tailwind 4 leaves <button> on the default arrow. In the base layer so a utility
+   like cursor-not-allowed still wins. */
+@layer base {
+  button:not(:disabled, [aria-disabled='true']) {
+    cursor: pointer;
+  }
+}
+
 /*
  * View transitions: the project cover morphs from card to detail page.
  * A slight blur mid-flight hides the stretching while the image resizes.

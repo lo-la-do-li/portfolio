@@ -69,7 +69,8 @@ export default function HeaderNav({ resumeHref }: { resumeHref: string }) {
 
   return (
     <nav aria-label="Main">
-      <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-[0.12em] text-muted">
+      {/* gap-y leaves room for the active indicator, which hangs below each link */}
+      <ul className="flex flex-wrap items-center gap-x-5 gap-y-5 font-mono text-xs uppercase tracking-[0.12em] text-muted">
         {navItems.map((item) => {
           const current = currentFor(item);
           return (
