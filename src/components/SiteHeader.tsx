@@ -23,7 +23,7 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-5">
           <HeaderNav resumeHref={profile.links.resume} />
 
           <ThemeToggle />
