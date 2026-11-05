@@ -17,7 +17,7 @@ The WebGL starfield hero on the home page.
   `'always'` to `'demand'` when the hero is scrolled out of view (IntersectionObserver)
   or the user prefers reduced motion.
 - `lensShader.ts` — the point shaders behind the cursor lens. Near the pointer the vertex
-  shader magnifies screen space (a fisheye, up to 2.2× at the center) and enlarges the
+  shader magnifies screen space (a fisheye, up to 1.6× at the center) and enlarges the
   stars, and the fragment shader blends them toward `lensHighlight`, so they read as
   closer. All on the GPU; the CPU only updates a few uniforms per frame. Lens size and
   strength are `LENS_RADIUS` / `LENS_MAGNIFY` in `StarfieldCanvas.tsx`. The shader

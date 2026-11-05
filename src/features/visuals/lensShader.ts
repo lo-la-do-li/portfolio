@@ -42,7 +42,7 @@ export const fragmentShader = /* glsl */ `
   void main() {
     vec2 c = gl_PointCoord * 2.0 - 1.0;
     if (dot(c, c) > 1.0) discard;
-    gl_FragColor = vec4(mix(vColor, uHighlight, vLens * 0.55), 1.0);
+    gl_FragColor = vec4(mix(vColor, uHighlight, vLens * 0.3), 1.0);
     #include <colorspace_fragment>
   }
 `;

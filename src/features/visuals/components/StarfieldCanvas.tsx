@@ -22,8 +22,8 @@ import { lensHighlight, particleColors } from '../palette';
 const POINT_COUNT = 2000;
 const POINT_SIZE = 0.015;
 // Lens size in half-heights of the hero, and how much it magnifies at its center
-const LENS_RADIUS = 0.5;
-const LENS_MAGNIFY = 1.2;
+const LENS_RADIUS = 0.35;
+const LENS_MAGNIFY = 0.6;
 
 // One RGB triple per point, cycling through the theme's palette. Color.set()
 // converts the sRGB hex into three.js's linear working space, which is what
