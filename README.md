@@ -54,6 +54,7 @@ npm run dev          # http://localhost:3000
 | `npm test`             | Unit tests (`npm run test:watch` while coding)                      |
 | `npm run test:e2e`     | Builds, serves on port 3100, runs Playwright + axe                  |
 | `npm run resume:pdf`   | Renders `resume/resume.html` to the site's PDF; fails past one page |
+| `npm run icons`        | Renders `src/app/icon.svg` to `favicon.ico` and `apple-icon.png`    |
 
 The first `test:e2e` run needs browsers: `npx playwright install chromium webkit`.
 
